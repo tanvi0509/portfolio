@@ -142,9 +142,11 @@ export default function NavBar() {
               </button>
               <button
                 className="hover:text-brown block hover:bg-hovercolor hover:text-xl rounded-lg p-2 transition-all duration-300 ease-in-out"
-                onClick={() => (window.location.href = "/contact")}
+                onClick={() => {
+                  window.open("/tanvi-final-resume.pdf", "_blank", "noopener,noreferrer")
+                }}
               >
-                Contact
+                Resume
               </button>
               <ThemeToggle />
             </div>
