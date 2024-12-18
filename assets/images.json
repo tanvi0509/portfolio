@@ -4,10 +4,15 @@
     "mainImage": "https://static.wixstatic.com/media/4c8d80_294631cf738445eca817032340ca1409~mv2.jpg/v1/fill/w_1459,h_1197,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/4c8d80_294631cf738445eca817032340ca1409~mv2.jpg"
   },
   "projectSection": {
+    "recensBrand": "https://ik.imagekit.io/harshatanvi/recens-copy-(3)%201_converted.webp?updatedAt=1734459079590",
     "recens": "https://ik.imagekit.io/harshatanvi/recens-copy-1_converted.webp?updatedAt=1733050458278",
     "petalsandpromises": "https://ik.imagekit.io/harshatanvi/petals%201_converted.webp?updatedAt=1733050458358",
     "envox": "https://ik.imagekit.io/harshatanvi/envox%201_converted.webp?updatedAt=1733050458332",
     "swavya": "https://ik.imagekit.io/harshatanvi/swavya%201_converted.webp?updatedAt=1733050458285"
+  },
+  "recensbrand": {
+    "heroimage": "https://ik.imagekit.io/harshatanvi/recens-brand-main.webp?updatedAt=1734459404890",
+    "heroimagemobile": "https://ik.imagekit.io/harshatanvi/recens-brand-main-mobile.webp?updatedAt=1734459404179"
   },
   "recens": {
     "heroimage": "https://ik.imagekit.io/harshatanvi/recens-storefront-board.webp?updatedAt=1732036338163",
