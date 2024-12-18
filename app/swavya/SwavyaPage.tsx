@@ -76,7 +76,7 @@ export default function SwavyaPage() {
             <LettersPullUp text="24hrs" />
           </div>
         </section>
-        <div className="my-8 border-t border-brown"></div>
+        <div className="my-8 border-t border-pink"></div>
         <section className="-2">
           <StaggeredFade
             text="Swavya"
