@@ -7,7 +7,7 @@ import { ProjectCard } from "@/components/ProjectCard";
 
 const projects = [
   {
-    src: images.projectSection.recens,
+    src: images.projectSection.recensBrand,
     alt: "Recens Logo",
     title: "therecens.com",
     description: "Best Shopping Experience",
