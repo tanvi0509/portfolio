@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react/no-unescaped-entities */
 
 import Image from "next/image";
 import images from "@/assets/images.json";
@@ -7,8 +8,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { StaggeredFade } from "@/components/ui/typing-effect-2";
 import { LettersPullUp } from "@/components/ui/letters-pullup";
-import SwipeCarousel from "@/components/SwipeCarousel";
-import { EyeCatchingButton } from "@/components/ui/ShinningButton";
+// SwipeCarousel and EyeCatchingButton removed — unused in this page
 
 const envoxheroimage = images.envox.heroimage;
 const envoxheroimagemobile = images.envox.heroimagemobile;

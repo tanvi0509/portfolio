@@ -398,7 +398,7 @@ export default function SwavyaPage() {
               <p className="text-[32px]">✍️</p>
               <h3 className="mt-3 text-[20px] sm:text-[22px] font-bold text-black">Story-Driven Technical Specs</h3>
               <p className="mt-2 text-[14px] sm:text-[15px] text-gray-600 leading-relaxed">
-                As a Co-founder of Recens, I recognized that transparency is our most effective sales tool. When a user can mentally 'feel' the fabric through the Composition and visualize the scale via the Model Information, the 'Trust Gap' disappears. We aren't just selling clothes; we are engineering a sense of physical security in a digital space.
+                As a Co-founder of Recens, I recognized that transparency is our most effective sales tool. When a user can mentally &apos;feel&apos; the fabric through the Composition and visualize the scale via the Model Information, the &apos;Trust Gap&apos; disappears. We aren&apos;t just selling clothes; we are engineering a sense of physical security in a digital space.
               </p>
             </div>
             <div className="bg-white border border-gray-300 rounded-lg p-6 min-h-[220px] h-full">
