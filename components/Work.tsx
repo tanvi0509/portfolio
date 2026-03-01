@@ -5,40 +5,50 @@ import images from "@/assets/images.json";
 import { motion } from "motion/react";
 import { ProjectCard } from "@/components/ProjectCard";
 
-const projects = [
+const projects: { src: string; alt: string; title: string; description: string; href: string; objectFit?: 'cover' | 'contain'; role?: string; extra?: string; }[] = [
   {
     src: images.projectSection.recensBrand,
     alt: "Recens Logo",
-    title: "therecens.com",
+    title: "Recens",
     description: "Best Shopping Experience",
+    role: "Co-Founder",
+    extra: "UI/UX Designer",
     href: "/recensshop",
   },
-  {
-    src: images.projectSection.recens,
-    alt: "Recens Brand",
-    title: "Recens Visual Identity Kit",
-    description: "Fashion Brand Aesthetics",
-    href: "/recens",
+    {
+    src: images.projectSection.envox,
+    alt: "Envox Picture",
+    title: "Envox",
+    description: "Revamping the Envox Website",
+      role: "UX Designer",
+      extra: "Web Developer",
+    href: "/envoxwork",
+    objectFit: "contain",
   },
   {
     src: images.projectSection.petalsandpromises,
     alt: "Petal and Promises image",
     title: "Petals and Promises",
     description: "Buying Flowers Made Easy",
+    role: "UI/UX Designer",
     href: "/petalsnpromises",
   },
   {
-    src: images.projectSection.envox,
-    alt: "Envox Picture",
-    title: "Envox",
-    description: "Revamping the Envox Website",
-    href: "/envoxwork",
+    src: images.projectSection.recens,
+    alt: "Recens Brand",
+    title: "Recens Visual Identity Kit",
+    description: "Fashion Brand Aesthetics",
+    role: "Co-Founder",
+    extra: "Graphic Designer",
+    href: "/recens",
   },
   {
     src: images.projectSection.swavya,
     alt: "Swavya Image",
     title: "Swavya",
     description: "Health Web Application",
+    role: "UI/UX Designer",
+    extra: "Web Developer",
     href: "/swavya",
   },
 ];
@@ -52,7 +62,13 @@ export default function Work() {
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12">
         {projects.map((project, index) => (
-          <ProjectCard key={index} {...project} index={index} />
+          project.title === "Recens" ? (
+            <div id="recens" key={index}>
+              <ProjectCard {...project} index={index} />
+            </div>
+          ) : (
+            <ProjectCard key={index} {...project} index={index} />
+          )
         ))}
       </div>
     </motion.main>

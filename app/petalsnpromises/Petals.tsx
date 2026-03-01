@@ -65,22 +65,22 @@ export default function Petals() {
         sm:max-w-[60em] sm:min-w-[10em] sm::mx-auto"
       >
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 p-4 max-w-5xl w-full mx-auto items-center">
-          <div className="flex flex-col items-start">
-            <StaggeredFade text="Type" className="text-pink" />
+          <div className="flex flex-col items-center text-center">
+            <StaggeredFade text="Type" className="text-black dark:text-whitish" />
             <LettersPullUp text="Personal Project" />
           </div>
-          <div className="flex flex-col items-start border-t md:border-t-0 md:border-l border-pink md:pl-4">
-            <StaggeredFade text="Tools" className="text-pink" />
+          <div className="flex flex-col items-center text-center border-t md:border-t-0 md:border-l border-black dark:border-pink md:pl-4">
+            <StaggeredFade text="Tools" className="text-black dark:text-whitish" />
             <LettersPullUp text="Figma, Canva, Adobe Illustrator" />
           </div>
-          <div className="flex flex-col items-start border-t md:border-t-0 md:border-l border-pink md:pl-4">
-            <StaggeredFade text="Timeline" className="text-pink" />
+          <div className="flex flex-col items-center text-center border-t md:border-t-0 md:border-l border-black dark:border-pink md:pl-4">
+            <StaggeredFade text="Timeline" className="text-black dark:text-whitish" />
             <LettersPullUp text="1 November - 7 November 2024" />
           </div>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section className="p-2">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 text-pink">
+        <div className="my-8"></div>
+        <section className="p-2 max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool ml-2 text-black dark:text-whitish">
             Logo & Design
           </h2>
           <div className="flex flex-col md:flex-col justify-center items-center space-y-4 md:space-y-[40px] md:space-x-0 mt-4">
@@ -97,7 +97,7 @@ export default function Petals() {
           <h2 className="text-center text-[21px] font-normal font-zcool text-neutral-600">
             Logo Type : Dynamic Logo
           </h2>
-          <h2 className="text-[30px] font-normal mt-9 font-zcool ml-4 text-pink">
+          <h2 className="text-[30px] font-normal mt-9 font-zcool ml-4 text-black dark:text-whitish">
             Problem Statement
           </h2>
           <p className="pt-4 px-4 text-[20px]">
@@ -111,7 +111,7 @@ export default function Petals() {
             meaning or cultural significance, leading to potential
             dissatisfaction and risk of selecting inappropriate arrangements.
           </p>
-          <h2 className="text-[30px] font-normal font-zcool ml-4 mt-4 text-pink">
+          <h2 className="text-[30px] font-normal font-zcool ml-4 mt-4 text-black dark:text-whitish">
             Goals
           </h2>
           <ul className="list-disc list-inside text-[18px] pt-2 px-4 marker:text-pink">
@@ -130,18 +130,20 @@ export default function Petals() {
             </li>
           </ul>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <h2 className="text-[30px] font-normal font-zcool ml-2 p-4 text-pink">
-          Solution
-        </h2>
-        <section className="flex items-center justify-center px-2 m-2">
-          <div className="w-full max-w-md md:max-w-lg lg:max-w-xl ml-4">
-            <Video />
+        <div className="my-8"></div>
+        <section className="p-4 max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool ml-2 p-0 text-black dark:text-whitish">
+            Solution
+          </h2>
+          <div className="flex items-center justify-center px-2 m-2">
+            <div className="w-full max-w-md md:max-w-lg lg:max-w-xl ml-4">
+              <Video />
+            </div>
           </div>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section className="p-4">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 text-pink">
+        <div className="my-8"></div>
+        <section className="p-4 max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool ml-2 text-black dark:text-whitish">
             Research
           </h2>
           <p className="font-zcool text-[20px] ml-2">
@@ -153,16 +155,16 @@ export default function Petals() {
             before a purchase, people said they would want to know about flower
             meanings.
           </p>
-          <h2 className="text-[30px] font-normal font-zcool ml-2 mb-4 mt-4 text-pink">
+          <h2 className="text-[30px] font-normal font-zcool ml-2 mb-4 mt-4 text-black dark:text-whitish max-w-4xl mx-auto px-4">
             Survey
           </h2>
           <div className="flex items-center justify-center ml-4">
             <Pie />
           </div>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section className="p-4">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-pink">
+        <div className="my-8"></div>
+        <section className="p-4 max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-black dark:text-whitish">
             Interview
           </h2>
           <p className="font-zcool text-[20px] ml-2">
@@ -172,20 +174,20 @@ export default function Petals() {
           </p>
           <Interview />
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section className="overflow-x-auto">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-pink">
+        <div className="my-8"></div>
+        <section className="overflow-x-auto max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-black dark:text-whitish">
             User Journey
           </h2>
           <UserJourneyTable />
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section>
+        <div className="my-8"></div>
+        <section className="max-w-4xl mx-auto px-4">
           <Personas />
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section>
-          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-pink">
+        <div className="my-8"></div>
+        <section className="max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-black dark:text-whitish">
             Reflection
           </h2>
           <p className="font-zcool text-[20px] ml-2">

@@ -35,7 +35,7 @@ const ThemeToggle = () => {
 
   return (
     <div
-      className="relative w-16 h-8 flex items-center bg-gray-300 dark:bg-hovercolor cursor-pointer 
+      className="relative w-16 h-8 flex items-center bg-white/10 backdrop-blur-md border border-white/20 cursor-pointer 
       rounded-full p-1"
       onClick={() => setDarkMode(!darkMode)}
     >

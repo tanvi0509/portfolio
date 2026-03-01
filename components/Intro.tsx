@@ -20,7 +20,7 @@ export default function Intro() {
           <IntroImage src={cartoonTanvi} alt="Tanvi's portrait illustration" />
         </div>
 
-        <div className="order-2 lg:order-2 flex flex-col justify-center mt-8 lg:mt-12">
+        <div className="order-2 lg:order-2 flex flex-col justify-center mt-8 lg:mt-[90px]">
           <IntroContent />
         </div>
       </div>

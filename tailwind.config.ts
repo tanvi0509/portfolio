@@ -11,13 +11,15 @@ const config: Config = {
     extend: {
       colors: {
         blackish: "#0f0f0f",
-        pink: "#E90074",
+        pink: "#FFFFFF",
         whitish: "#fafafa",
-        hovercolor: "#ffcce6",
+        hovercolor: "#d3d3d3",
       },
       fontFamily: {
-        sans: ["Open Sans", "sans-serif"],
+        sans: ["Roboto", "sans-serif"],
         zcool: ["ZCOOL XiaoWei", "serif"],
+        inter: ["Roboto", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
       },
       animation: {
         "bg-shine": "bg-shine 2.1s linear infinite",

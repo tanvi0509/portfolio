@@ -47,29 +47,31 @@ export default function Recens() {
         {/* Hero Image */}
         {/* Text Section */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 p-4 max-w-5xl w-full mx-auto items-center">
-          <div className="flex flex-col items-start">
-            <StaggeredFade text="Type" className="text-pink" />
+          <div className="flex flex-col items-center text-center">
+            <StaggeredFade text="Type" className="text-black dark:text-whitish" />
             <LettersPullUp text="Brand Work" />
           </div>
-          <div className="flex flex-col items-start border-t md:border-t-0 md:border-l border-pink md:pl-4">
-            <StaggeredFade text="Tools" className="text-pink" />
+          <div className="flex flex-col items-center text-center border-t md:border-t-0 md:border-l border-black dark:border-pink md:pl-4">
+            <StaggeredFade text="Tools" className="text-black dark:text-whitish" />
             <LettersPullUp text="Figma, Canva, Adobe Illustrator" />
           </div>
-          <div className="flex flex-col items-start border-t md:border-t-0 md:border-l border-pink md:pl-4">
-            <StaggeredFade text="Timeline" className="text-pink" />
+          <div className="flex flex-col items-center text-center border-t md:border-t-0 md:border-l border-black dark:border-pink md:pl-4">
+            <StaggeredFade text="Timeline" className="text-black dark:text-whitish" />
             <LettersPullUp text="1 November - 7 November 2024" />
           </div>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <p className="p-4 text-[20px]">
+        <div className="my-8"></div>
+        <section className="p-4 max-w-4xl mx-auto px-4">
+          <p className="text-[20px]">
           In this section, I have illustrated how creativity and strategic
           design led us to our logo, thank-you cards, tags, and stickers. I
           enjoy discovering Recens&apos;s essence as much as I enjoyed creating
           it.
-        </p>
+          </p>
+        </section>
 
-        <section className="p-4 ml-4">
-          <h2 className="text-[30px] font-normal font-zcool text-pink">
+        <section className="p-4 max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
             Logo & Tagline
           </h2>
           <p className="font-zcool text-[20px]">
@@ -102,9 +104,9 @@ export default function Recens() {
             </div>
           </div>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section className="p-4 ml-4">
-          <h2 className="text-[30px] font-normal font-zcool text-pink">
+        <div className="my-8"></div>
+        <section className="p-4 max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
             Package Designing
           </h2>
           <p className="font-zcool text-[20px]">
@@ -133,9 +135,9 @@ export default function Recens() {
             </div>
           </div>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section className="p-4 ml-4">
-          <h2 className="text-[30px] font-normal font-zcool text-pink">
+        <div className="my-8"></div>
+        <section className="p-4 max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
             Thank-You Cards
           </h2>
           <p className="font-zcool text-[20px]">
@@ -164,9 +166,9 @@ export default function Recens() {
             </div>
           </div>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section className="p-4 ml-4">
-          <h2 className="text-[30px] font-normal font-zcool text-pink">
+        <div className="my-8"></div>
+        <section className="p-4 max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
             Tags & Stickers
           </h2>
           <div className="flex flex-col md:flex-col justify-center items-center space-y-4 md:space-y-[40px] md:space-x-0 mt-10">

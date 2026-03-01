@@ -5,3 +5,43 @@
 * {
   box-sizing: border-box;
 }
+
+/* Custom details/summary marker: replace triangle with + / - */
+details summary {
+  list-style: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1.2rem;
+  margin-right: 0.5rem;
+  font-weight: 700;
+}
+details[open] summary::before {
+  content: "-";
+}
+
+/* Small bio text used in IntroContent */
+.bio-small {
+  font-size: 1.1rem !important;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Typewriter caret/blink */
+.typewriter .caret {
+  display: inline-block;
+  margin-left: 0.25rem;
+  animation: blink 1s steps(2) infinite;
+  opacity: 1;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

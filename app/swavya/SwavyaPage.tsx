@@ -58,31 +58,25 @@ export default function SwavyaPage() {
           />
         </motion.div>
       </section>
-      <div
-        className="max-w-[22em] min-w-[18em] pb-[60px] xl:max-w-[80em] xl:min-w-[30em] h-full xl:mx-auto xl:mt-0
-        sm:max-w-[60em] sm:min-w-[10em] sm::mx-auto"
-      >
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 p-4 max-w-5xl w-full mx-auto items-center">
-          <div className="flex flex-col items-start">
-            <StaggeredFade text="Type" className="text-pink" />
+      <div className="max-w-4xl mx-auto px-4">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 p-4 w-full items-center">
+          <div className="flex flex-col items-center text-center">
+            <StaggeredFade text="Type" className="text-black dark:text-whitish" />
             <LettersPullUp text="Hackathon" />
           </div>
-          <div className="flex flex-col items-start border-t md:border-t-0 md:border-l border-brown md:pl-4">
-            <StaggeredFade text="Tools" className="text-pink" />
+          <div className="flex flex-col items-center text-center">
+            <StaggeredFade text="Tools" className="text-black dark:text-whitish" />
             <LettersPullUp text="HTML, CSS, Javascript" />
           </div>
-          <div className="flex flex-col items-start border-t md:border-t-0 md:border-l border-brown md:pl-4">
-            <StaggeredFade text="Timeline" className="text-pink" />
+          <div className="flex flex-col items-center text-center">
+            <StaggeredFade text="Timeline" className="text-black dark:text-whitish" />
             <LettersPullUp text="24hrs" />
           </div>
         </section>
-        <div className="my-8 border-t border-pink"></div>
-        <section className="-2">
-          <StaggeredFade
-            text="Swavya"
-            className="text-[30px] mt-9 ml-4 text-pink"
-          />
-          <p className="pt-4 px-4 text-[20px]">
+        <div className="my-8"></div>
+        <section>
+          <StaggeredFade text="Swavya" className="text-[30px] mt-9 text-black dark:text-whitish" />
+          <p className="pt-4 text-[20px]">
             Swavya is a holistic health web application designed to integrate
             personalized exercise routines and diet plans with an innovative
             chatbot feature to guide users through their fitness journey. This
@@ -92,12 +86,12 @@ export default function SwavyaPage() {
           </p>
         </section>
         <section className="flex items-center justify-center px-2 m-2">
-          <div className="w-full max-w-md md:max-w-lg lg:max-w-xl ml-4">
+          <div className="w-full max-w-md md:max-w-lg lg:max-w-xl">
             <SwavyaVideo />
           </div>
         </section>
         <section>
-          <p className="pt-4 px-4 text-[20px]">
+          <p className="pt-4 text-[20px]">
             Since this was my first project in the ui/ux field, it has a special
             place in my career. Working on this during an ACM hackathon sparked
             my interest in this topic. I later received a lot of appreciation

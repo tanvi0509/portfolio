@@ -1,11 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 
-// Load the Inter font
-const inter = Inter({ subsets: ["latin"] });
+// Load the Roboto font
+const roboto = Roboto({ subsets: ["latin"], weight: ["300","400","500","700"] });
 
 export const metadata: Metadata = {
   title: "Tanvi Reddy - Portfolio",
@@ -20,21 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Preconnect to Google Fonts */}
+        {/* Preconnect to Google Fonts (kept for compatibility) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* Link to Google Fonts */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap"
-          rel="stylesheet"
-        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${inter.className} dark:bg-blackish bg-whitish flex flex-col min-h-screen`}
+        className={`${roboto.className} dark:bg-blackish bg-whitish flex flex-col min-h-screen`}
       >
         <NavBar />
         {children}
