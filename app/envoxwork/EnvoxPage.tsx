@@ -460,15 +460,15 @@ export default function EnvoxPage() {
               </p>
             </div>
             {/* Image - Right */}
-            <div className="md:w-1/2 flex justify-center">
-              <Image
-                src="/envoxheromockup.png"
-                alt="Navigation design"
-                width={600}
-                height={400}
-                className="rounded-lg object-contain"
-              />
-            </div>
+              <div className="md:w-1/2 flex justify-center">
+                <Image
+                  src="/envoxheromockup.PNG"
+                  alt="Navigation design"
+                  width={600}
+                  height={400}
+                  className="rounded-lg object-contain"
+                />
+              </div>
           </div>
         </section>
 
@@ -483,15 +483,15 @@ export default function EnvoxPage() {
 
           <div className="flex flex-col md:flex-row gap-8 items-center ml-2">
             {/* Image - Left */}
-            <div className="md:w-1/2 flex justify-center">
-              <Image
-                src="/envoxworkmockup.png"
-                alt="Placement design"
-                width={600}
-                height={400}
-                className="rounded-lg object-contain"
-              />
-            </div>
+              <div className="md:w-1/2 flex justify-center">
+                <Image
+                  src="/envoxworkmockup.PNG"
+                  alt="Placement design"
+                  width={600}
+                  height={400}
+                  className="rounded-lg object-contain"
+                />
+              </div>
             {/* Info - Right */}
             <div className="md:w-1/2 space-y-4">
               <p className="text-[16px] sm:text-[18px] leading-relaxed text-gray-600 dark:text-gray-300">
