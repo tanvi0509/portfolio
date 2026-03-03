@@ -37,7 +37,7 @@ function buildPlacements(bandsSpec: number[][]) {
 
 const placements = buildPlacements(bands);
 
-function PlaygroundCard({ title, description, index }: CardSpec & { index: number }) {
+function PlaygroundCard({ index }: CardSpec & { index: number }) {
   const gradients = [
     "from-pink-400 via-red-400 to-yellow-400",
     "from-indigo-500 via-purple-500 to-pink-500",
