@@ -1,11 +1,20 @@
+"use client";
+
 import images from "@/assets/images.json";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 export default function Personas() {
   return (
     <div>
-      <section className="p-4">
-        <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.2 }}
+        className="p-4"
+      >
+        <h2 className="text-[30px] font-normal font-roboto text-black dark:text-whitish">
           User Personas
         </h2>
         <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-[40px] mt-10 ml-4">
@@ -37,7 +46,7 @@ export default function Personas() {
             />
           </div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 }

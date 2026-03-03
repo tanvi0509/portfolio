@@ -63,21 +63,21 @@ export function ProjectCard({
           animate={{ opacity: 1 }}
           transition={{ delay: index * 0.1 + 0.2 }}
         >
-          <h2 className="font-zcool text-blackish dark:text-whitish text-2xl leading-tight font-normal mb-2 border-b border-blackish dark:border-pink pb-2">
+          <h2 className="font-roboto text-blackish dark:text-whitish text-2xl leading-tight font-normal mb-2 border-b border-blackish dark:border-pink pb-2">
             {title}
           </h2>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center gap-2">
             <p className="dark:text-neutral-300 text-blackish text-lg">
               {description}
             </p>
             <div className="inline-flex items-baseline space-x-2 ml-auto">
               {role && (
-                <span className="text-sm font-medium text-gray-700 dark:text-neutral-300 bg-transparent border border-gray-200 dark:border-gray-700 rounded-full px-3 py-1">
+                <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-neutral-300 bg-transparent border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5 sm:px-3 sm:py-1 whitespace-nowrap">
                   {role}
                 </span>
               )}
               {extra && (
-                <span className="text-sm font-medium text-gray-700 dark:text-neutral-300 bg-transparent border border-gray-200 dark:border-gray-700 rounded-full px-3 py-1">
+                <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-neutral-300 bg-transparent border border-gray-200 dark:border-gray-700 rounded-full px-2 py-0.5 sm:px-3 sm:py-1 whitespace-nowrap">
                   {extra}
                 </span>
               )}

@@ -18,7 +18,7 @@ export default function NavBar() {
   return (
     <div>
       {/* Spacer to prevent layout shift when navbar is fixed */}
-      <div className="font-zcool h-0" />
+      <div className="font-roboto h-0" />
       <motion.nav
         initial={{ y: -200, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -29,17 +29,17 @@ export default function NavBar() {
         }}
         className="bg-transparent fixed top-0 left-0 right-0 z-10"
       >
-        <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-0 sm:px-2 lg:px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex">
-              <Link href="/">
+            <div className="flex items-center -ml-1">
+              <Link href="/" className="relative block w-[100px] h-[60px] sm:w-[150px] sm:h-[80px]">
                 <Image
                   src="/ktr-final.webp"
                   alt="Logo"
                   width={319}
                   height={438}
-                  className="h-auto w-[150px] top-[-25px] left-[8px] absolute"
+                  className="h-auto w-[100px] sm:w-[150px] absolute top-0 left-0 z-20"
                   priority
                 />
               </Link>
@@ -53,7 +53,7 @@ export default function NavBar() {
               <Link href="/" passHref>
                 <button
                   className={`relative z-20 border border-gray-300 dark:border-white/20 rounded-full px-6 py-3 min-w-[7rem] text-center transition-all duration-300 ease-in-out backdrop-blur-md
-        ${"/".includes(pathname) ? "bg-hovercolor text-brown dark:text-black" : "text-gray-700 dark:text-black bg-white/10 hover:bg-hovercolor hover:text-black hover:text-xl dark:hover:text-black"}`}
+        ${pathname === "/" ? "bg-hovercolor text-brown dark:text-black" : "text-gray-700 dark:text-white bg-white/10 hover:bg-hovercolor hover:text-black hover:text-xl dark:hover:text-black"}`}
                 >
                   Home
                 </button>

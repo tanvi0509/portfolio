@@ -41,8 +41,8 @@ export default function Recens() {
         />
       </motion.div>
       <div
-        className="max-w-[22em] min-w-[18em] pb-[60px] xl:max-w-[80em] xl:min-w-[30em] h-full xl:mx-auto xl:mt-0
-        sm:max-w-[60em] sm:min-w-[10em] sm::mx-auto"
+        className="mx-auto max-w-[22em] min-w-[18em] pb-[60px] xl:max-w-[80em] xl:min-w-[30em] h-full xl:mt-0
+        sm:max-w-[60em] sm:min-w-[10em]"
       >
         {/* Hero Image */}
         {/* Text Section */}
@@ -71,10 +71,10 @@ export default function Recens() {
         </section>
 
         <section className="p-4 max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto text-black dark:text-whitish">
             Logo & Tagline
           </h2>
-          <p className="font-zcool text-[20px]">
+          <p className="font-roboto text-[20px]">
             The Recens logo utilizes Tenor Sans to convey a sense of modern
             sophistication, while the tagline &quot;One of a Kind&quot; is
             elegantly presented in Monterchi Sans, highlighting the brand&apos;s
@@ -83,14 +83,14 @@ export default function Recens() {
             identity resonates with our core values of elegance and
             individuality.
           </p>
-          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-[150px] mt-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 lg:gap-16 mt-10">
             <div className="flex-1 max-w-md shadow-2xl">
               <Image
                 src={secOne}
                 alt="recens logo"
                 width={400}
                 height={400}
-                className="object-contain w-auto h-full"
+                className="object-contain w-full h-auto"
               />
             </div>
             <div className="flex-1 max-w-md shadow-2xl">
@@ -99,29 +99,29 @@ export default function Recens() {
                 alt="recens logo"
                 width={400}
                 height={400}
-                className="object-contain w-auto h-full"
+                className="object-contain w-full h-auto"
               />
             </div>
           </div>
         </section>
         <div className="my-8"></div>
         <section className="p-4 max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto text-black dark:text-whitish">
             Package Designing
           </h2>
-          <p className="font-zcool text-[20px]">
+          <p className="font-roboto text-[20px]">
             Crafting understated elegance, my design for budget friendly Recens
             corrugated boxes combines minimalism with functional luxury,
             emphasizing a clean, sophisticated aesthetic.
           </p>
-          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-[150px] mt-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 lg:gap-16 mt-10">
             <div className="flex-1 max-w-md shadow-lg">
               <Image
                 src={secThree}
                 alt="recens logo"
                 width={800}
                 height={800}
-                className="object-contain w-auto h-full"
+                className="object-contain w-full h-auto"
               />
             </div>
             <div className="flex-1 max-w-md shadow-2xl">
@@ -137,10 +137,10 @@ export default function Recens() {
         </section>
         <div className="my-8"></div>
         <section className="p-4 max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto text-black dark:text-whitish">
             Thank-You Cards
           </h2>
-          <p className="font-zcool text-[20px]">
+          <p className="font-roboto text-[20px]">
             My Design for Recens&apos; thank you cards embodies gratitude with
             style. It blends minimalism with a personal touch, ensuring each
             recipient feels uniquely appreciated.
@@ -168,7 +168,7 @@ export default function Recens() {
         </section>
         <div className="my-8"></div>
         <section className="p-4 max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto text-black dark:text-whitish">
             Tags & Stickers
           </h2>
           <div className="flex flex-col md:flex-col justify-center items-center space-y-4 md:space-y-[40px] md:space-x-0 mt-10">

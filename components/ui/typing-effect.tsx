@@ -19,7 +19,7 @@ export function TypingEffect({
       ref={ref}
       style={style}
       className={
-        className || "text-[29px] text-brown sm:text-[46px] font-normal font-zcool tracking-tighter md:leading-[4rem]"
+        className || "text-[29px] text-brown sm:text-[46px] font-normal font-roboto tracking-tighter md:leading-[4rem]"
       }
     >
       {text.split("").map((letter, index) => (

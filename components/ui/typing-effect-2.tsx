@@ -32,7 +32,7 @@ export const StaggeredFade: React.FC<TextStaggeredFadeProps> = ({
       animate={isInView ? "show" : ""}
       variants={variants}
       viewport={{ once: true }}
-      className={cn("text-[30px] font-normal font-zcool", className)}
+      className={cn("text-[30px] font-normal font-roboto", className)}
     >
       {letters.map((word, i) => (
         <motion.span key={`${word}-${i}`} variants={variants} custom={i}>

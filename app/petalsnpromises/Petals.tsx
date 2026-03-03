@@ -61,8 +61,8 @@ export default function Petals() {
         />
       </motion.div>
       <div
-        className="max-w-[22em] min-w-[18em] pb-[60px] xl:max-w-[80em] xl:min-w-[30em] h-full xl:mx-auto xl:mt-0
-        sm:max-w-[60em] sm:min-w-[10em] sm::mx-auto"
+        className="mx-auto max-w-[22em] min-w-[18em] pb-[60px] xl:max-w-[80em] xl:min-w-[30em] h-full xl:mt-0
+        sm:max-w-[60em] sm:min-w-[10em]"
       >
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 p-4 max-w-5xl w-full mx-auto items-center">
           <div className="flex flex-col items-center text-center">
@@ -80,7 +80,7 @@ export default function Petals() {
         </section>
         <div className="my-8"></div>
         <section className="p-2 max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto ml-2 text-black dark:text-whitish">
             Logo & Design
           </h2>
           <div className="flex flex-col md:flex-col justify-center items-center space-y-4 md:space-y-[40px] md:space-x-0 mt-4">
@@ -94,10 +94,10 @@ export default function Petals() {
               />
             </div>
           </div>
-          <h2 className="text-center text-[21px] font-normal font-zcool text-neutral-600">
+          <h2 className="text-center text-[21px] font-normal font-roboto text-neutral-600">
             Logo Type : Dynamic Logo
           </h2>
-          <h2 className="text-[30px] font-normal mt-9 font-zcool ml-4 text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal mt-9 font-roboto ml-4 text-black dark:text-whitish">
             Problem Statement
           </h2>
           <p className="pt-4 px-4 text-[20px]">
@@ -111,7 +111,7 @@ export default function Petals() {
             meaning or cultural significance, leading to potential
             dissatisfaction and risk of selecting inappropriate arrangements.
           </p>
-          <h2 className="text-[30px] font-normal font-zcool ml-4 mt-4 text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto ml-4 mt-4 text-black dark:text-whitish">
             Goals
           </h2>
           <ul className="list-disc list-inside text-[18px] pt-2 px-4 marker:text-pink">
@@ -132,7 +132,7 @@ export default function Petals() {
         </section>
         <div className="my-8"></div>
         <section className="p-4 max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 p-0 text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto ml-2 p-0 text-black dark:text-whitish">
             Solution
           </h2>
           <div className="flex items-center justify-center px-2 m-2">
@@ -143,10 +143,10 @@ export default function Petals() {
         </section>
         <div className="my-8"></div>
         <section className="p-4 max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto ml-2 text-black dark:text-whitish">
             Research
           </h2>
-          <p className="font-zcool text-[20px] ml-2">
+          <p className="font-roboto text-[20px] ml-2">
             I ran a Google survey to narrow down our research and see
             people&apos;s behavior and preferences when they buy flowers. A
             total of 50 volunteers from the US and India, aged between 16 and
@@ -155,7 +155,7 @@ export default function Petals() {
             before a purchase, people said they would want to know about flower
             meanings.
           </p>
-          <h2 className="text-[30px] font-normal font-zcool ml-2 mb-4 mt-4 text-black dark:text-whitish max-w-4xl mx-auto px-4">
+          <h2 className="text-[30px] font-normal font-roboto ml-2 mb-4 mt-4 text-black dark:text-whitish max-w-4xl mx-auto px-4">
             Survey
           </h2>
           <div className="flex items-center justify-center ml-4">
@@ -164,10 +164,10 @@ export default function Petals() {
         </section>
         <div className="my-8"></div>
         <section className="p-4 max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto ml-2 mt-4 mb-4 text-black dark:text-whitish">
             Interview
           </h2>
-          <p className="font-zcool text-[20px] ml-2">
+          <p className="font-roboto text-[20px] ml-2">
             We interviewed four people. They were two 20-year-old college
             students, one 30-year-old mother, and one 25-year-old working
             professional.
@@ -176,7 +176,7 @@ export default function Petals() {
         </section>
         <div className="my-8"></div>
         <section className="overflow-x-auto max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto ml-2 mt-4 mb-4 text-black dark:text-whitish">
             User Journey
           </h2>
           <UserJourneyTable />
@@ -187,10 +187,10 @@ export default function Petals() {
         </section>
         <div className="my-8"></div>
         <section className="max-w-4xl mx-auto px-4">
-          <h2 className="text-[30px] font-normal font-zcool ml-2 mt-4 mb-4 text-black dark:text-whitish">
+          <h2 className="text-[30px] font-normal font-roboto ml-2 mt-4 mb-4 text-black dark:text-whitish">
             Reflection
           </h2>
-          <p className="font-zcool text-[20px] ml-2">
+          <p className="font-roboto text-[20px] ml-2">
             For this floral customization app, I focused on creating a
             user-centered design that balances personalization and simplicity. I
             created detailed user personas spanning a wide range of ages, which

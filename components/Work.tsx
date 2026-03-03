@@ -58,7 +58,7 @@ export default function Work() {
     <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="font-zcool container mx-auto px-4 py-16"
+      className="font-roboto container mx-auto px-4 py-16"
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12">
         {projects.map((project, index) => (

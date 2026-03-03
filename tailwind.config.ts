@@ -17,8 +17,6 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["Roboto", "sans-serif"],
-        zcool: ["ZCOOL XiaoWei", "serif"],
-        inter: ["Roboto", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
       },
       animation: {

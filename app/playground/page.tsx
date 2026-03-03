@@ -52,12 +52,12 @@ function PlaygroundCard({ title, description, index }: CardSpec & { index: numbe
     <motion.div
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.99 }}
-      className={`w-full h-full overflow-hidden bg-gradient-to-br ${g} relative flex items-end`}
+      className={`w-full h-full overflow-hidden bg-gradient-to-br ${g} relative flex items-center justify-center`}
     >
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-white to-transparent" />
-      <div className="p-6 z-10 text-left text-white">
-        <h3 className="text-2xl font-bold mb-1">{title}</h3>
-        <p className="text-sm opacity-90">{description}</p>
+      <div className="z-10 text-center text-white">
+        <h3 className="text-2xl font-bold mb-1">Coming Soon</h3>
+        <p className="text-sm opacity-90">Page Under Construction</p>
       </div>
     </motion.div>
   );

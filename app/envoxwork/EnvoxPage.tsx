@@ -376,49 +376,49 @@ export default function EnvoxPage() {
             viewport={{ once: true, amount: 0.2 }}
             className="flex flex-col md:flex-row justify-center items-center gap-2 md:space-x-0 mt-10"
           >
-            <div className="flex-1 max-w-full shadow-xl transform transition-all duration-300 ease-in-out hover:scale-150 hover:z-10">
+            <div className="flex-1 max-w-full shadow-xl transform transition-all duration-300 ease-in-out md:hover:scale-110 md:hover:z-10">
               <Image
                 src="/wireframe1.webp"
                 alt="wireframe 1"
                 width={499}
                 height={743}
-                className="object-contain w-auto h-full"
+                className="object-contain w-full h-auto"
               />
             </div>
-            <div className="flex-1 max-w-full shadow-2xl transform transition-all duration-300 ease-in-out hover:scale-150 hover:z-10">
+            <div className="flex-1 max-w-full shadow-2xl transform transition-all duration-300 ease-in-out md:hover:scale-110 md:hover:z-10">
               <Image
                 src="/wireframe2.webp"
                 alt="wireframe 2"
                 width={334}
                 height={598}
-                className="object-contain w-auto h-full"
+                className="object-contain w-full h-auto"
               />
             </div>
-            <div className="flex-1 max-w-full shadow-2xl transform transition-all duration-300 ease-in-out hover:scale-150 hover:z-10">
+            <div className="flex-1 max-w-full shadow-2xl transform transition-all duration-300 ease-in-out md:hover:scale-110 md:hover:z-10">
               <Image
                 src="/wireframe3.webp"
                 alt="wireframe 3"
                 width={415}
                 height={692}
-                className="object-contain w-auto h-full"
+                className="object-contain w-full h-auto"
               />
             </div>
-            <div className="flex-1 max-w-full shadow-2xl transform transition-all duration-300 ease-in-out hover:scale-150 hover:z-10">
+            <div className="flex-1 max-w-full shadow-2xl transform transition-all duration-300 ease-in-out md:hover:scale-110 md:hover:z-10">
               <Image
                 src="/wireframe4.webp"
                 alt="wireframe 4"
                 width={476}
                 height={714}
-                className="object-contain w-auto h-full"
+                className="object-contain w-full h-auto"
               />
             </div>
-            <div className="flex-1 max-w-full shadow-2xl transform transition-all duration-300 ease-in-out hover:scale-150 hover:z-10">
+            <div className="flex-1 max-w-full shadow-2xl transform transition-all duration-300 ease-in-out md:hover:scale-110 md:hover:z-10">
               <Image
                 src="/wireframe5.webp"
                 alt="wireframe 5"
                 width={411}
                 height={687}
-                className="object-contain w-auto h-full"
+                className="object-contain w-full h-auto"
               />
             </div>
           </motion.div>

@@ -58,8 +58,8 @@ export default function SwavyaPage() {
         </motion.div>
       </section>
       <div
-        className="max-w-[22em] min-w-[18em] pb-[60px] xl:max-w-[80em] xl:min-w-[30em] h-full xl:mx-auto xl:mt-0
-        sm:max-w-[60em] sm:min-w-[10em] sm::mx-auto"
+        className="mx-auto max-w-[22em] min-w-[18em] pb-[60px] xl:max-w-[80em] xl:min-w-[30em] h-full xl:mt-0
+        sm:max-w-[60em] sm:min-w-[10em]"
       >
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 p-4 max-w-5xl w-full mx-auto items-center text-center">
           <div className="flex flex-col items-center">

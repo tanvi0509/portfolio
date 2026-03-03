@@ -34,7 +34,7 @@ export function LettersPullUp({
           initial="initial"
           animate={isInView ? "animate" : ""}
           custom={i}
-          className={cn("font-zcool font-normal", className)}
+          className={cn("font-roboto font-normal", className)}
         >
           {current == " " ? <span>&nbsp;</span> : current}
         </motion.div>

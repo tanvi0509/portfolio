@@ -49,14 +49,20 @@ export default function AboutPage() {
             />
           </div>
 
-          <div className="prose prose-xl dark:prose-invert max-w-none">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="prose prose-xl dark:prose-invert max-w-none"
+          >
             <p className="text-xl leading-relaxed mb-8">
               <span className="opacity-40">Hi, I&apos;m a</span>{" "}
               <span>UI/UX designer</span>{" "}
               <span className="opacity-40">who started in</span>{" "}
               <span>Artificial Intelligence</span>{" "}
               <span className="opacity-40">and somehow ended up caring way more about</span>{" "}
-              humans {" "}
+              humans{" "}
               <span className="opacity-40">than machines (no offense to machines). I found my place in</span>{" "}
               <span>Human-Computer Interaction</span>
               <span className="opacity-40">, where I get to obsess over how people think, behave, and occasionally rage-click buttons.</span>
@@ -67,7 +73,7 @@ export default function AboutPage() {
               <span>research-driven</span>{" "}
               <span className="opacity-40">and very</span>{" "}
               <span>product-minded</span>
-              <span className="opacity-40">,I talk to users, sit with messy insights, and turn them into designs that actually make sense.</span>{" "}
+              <span className="opacity-40">, I talk to users, sit with messy insights, and turn them into designs that actually make sense.</span>{" "}
               <span className="opacity-40">I&apos;ve</span>{" "}
               <span>interviewed users, built brands from scratch, designed AI-powered systems</span>{" "}
               <span className="opacity-40">and worked across teams to make decisions rooted in</span>{" "}
@@ -79,9 +85,8 @@ export default function AboutPage() {
 
             <p className="text-xl leading-relaxed mb-8">
               <span className="opacity-40">Whether I&apos;m</span>{" "}
-              <span>mapping user journeys, designing interfaces</span>
-              <span className="opacity-40">, or</span>{" "}
-              <span className="opacity-40">my goal is simple: build experiences that feel</span>{" "}
+              <span>mapping user journeys or designing interfaces</span>
+              <span className="opacity-40"> my goal is simple: build experiences that feel</span>{" "}
               <span>intuitive, useful</span>
               <span className="opacity-40">, and unmistakably</span>{" "}
               <span>human</span>
@@ -102,7 +107,7 @@ export default function AboutPage() {
             <p className="text-xl leading-relaxed">
               <span className="opacity-40">Basically, I design so technology behaves itself, and people don&apos;t have to fight it.</span>
             </p>
-          </div>
+          </motion.div>
 
           <motion.div
             whileHover={{ scale: 1.05 }}
