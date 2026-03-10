@@ -28,13 +28,12 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
       >
         {children}
       </h2>
-    </div>
-  );
-}
-
-function Divider() {
-  return (
-    <div className="flex items-center gap-3 my-11">
+          <div
+            style={{
+              background:
+                "radial-gradient(circle, rgba(244,98,42,0.12), transparent 70%)",
+            }}
+          />
       <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
       <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
     </div>
