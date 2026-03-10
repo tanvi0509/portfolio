@@ -227,7 +227,10 @@ export default function YouTubeASL() {
             </p>
           </div>
 
-          <Divider />
+          <div className="flex items-center gap-3 my-11">
+            <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
+            <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
+          </div>
 
           {/* Design Values */}
           <div className="mb-13">
@@ -266,7 +269,10 @@ export default function YouTubeASL() {
             </div>
           </div>
 
-          <Divider />
+          <div className="flex items-center gap-3 my-11">
+            <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
+            <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
+          </div>
 
           {/* Process */}
           <div className="mb-13">
