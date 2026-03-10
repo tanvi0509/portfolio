@@ -28,20 +28,14 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
       >
         {children}
       </h2>
-          <div
-            style={{
-              background:
-                "radial-gradient(circle, rgba(244,98,42,0.12), transparent 70%)",
-            }}
-          />
       <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
-      <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
-          <div
-            style={{
-              background:
-                "radial-gradient(circle, rgba(244,98,42,0.12), transparent 70%)",
-            }}
-          />
+    </div>
+  );
+}
+
+function ValueCard({
+  icon,
+  title,
   description,
   accent,
 }: {
@@ -136,7 +130,7 @@ export default function YouTubeASL() {
             }}
           />
           <div
-                description='We rebuilt the prototype on a real YouTube page. The "Interpretations" sub-menu (nestled under Subtitles/CC) offered multiple sign languages, ASL, BSL, LSF, CSL, ISPL, making it clear this wasn&apos;t just an American feature. The pip window defaulted to the top-right corner but was fully movable and resizable.'
+            className="absolute w-[400px] h-[400px] rounded-full bottom-[-180px] left-[-120px]"
             style={{
               background:
                 "radial-gradient(circle, rgba(244,98,42,0.12), transparent 70%)",
