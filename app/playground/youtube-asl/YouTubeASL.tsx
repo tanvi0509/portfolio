@@ -36,13 +36,12 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
           />
       <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
       <span className="flex-1 h-px bg-[#ede9e0] dark:bg-[#333]" />
-    </div>
-  );
-}
-
-function ValueCard({
-  icon,
-  title,
+          <div
+            style={{
+              background:
+                "radial-gradient(circle, rgba(244,98,42,0.12), transparent 70%)",
+            }}
+          />
   description,
   accent,
 }: {
