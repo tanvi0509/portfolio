@@ -1,16 +1,61 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { TypingEffect } from "@/components/ui/typing-effect";
 
-type CardSpec = { title: string; description: string };
+type CardSpec = { title: string; description: string; href?: string; gradient?: string };
 
-// Use exactly 10 items and lay them out in 4 horizontal bands (each band is two grid-rows)
-const projects: CardSpec[] = Array.from({ length: 10 }).map((_, i) => ({
-  title: `Experiment ${i + 1}`,
-  description: `Interactive sandbox card ${i + 1}`,
-}));
+const projects: CardSpec[] = [
+  {
+    title: "An Interactive Bouquet",
+    description: "Intro to Build (Advanced) Physical Computing",
+    href: "/playground/valentine-bouquet",
+    gradient: "from-rose-500 via-pink-400 to-red-400",
+  },
+  {
+    title: "Introducing AI-Bot in UCSC Canvas",
+    description: "UX Quant and Intro to HCI Methods",
+    href: "/playground/canvas-ux",
+    gradient: "from-indigo-600 via-indigo-500 to-violet-500",
+  },
+  {
+    title: "Design for Access: YouTube ASL Translations",
+    description: "Intro to HCI Methods",
+    href: "/playground/youtube-asl",
+    gradient: "from-purple-700 via-violet-500 to-teal-400",
+  },
+  {
+    title: "Data Analysis of Disney's The Little Mermaid",
+    description: "Intro to HCI Method",
+    href: "/playground/little-mermaid",
+    gradient: "from-slate-900 via-blue-800 to-teal-500",
+  },
+  {
+    title: "TikTok: Building a Research Question",
+    description: "Intro to HCI",
+    href: "/playground/tiktok-food",
+    gradient: "from-gray-950 via-gray-900 to-gray-800",
+  },
+  {
+    title: "Magnetic Hall Effect Sensor",
+    description: "Intro to Build (Advanced) Physical Computing",
+    href: "/playground/hall-effect",
+    gradient: "from-gray-900 via-gray-800 to-emerald-500",
+  },
+  {
+    title: "Expansion: Accessibility, Aging & Designing",
+    description: "Intro to HCI Methods:",
+    href: "/playground/hci-expansion",
+    gradient: "from-amber-500 via-orange-400 to-emerald-600",
+  },
+  ...Array.from({ length: 3 }).map((_, i) => ({
+    title: `Experiment ${i + 8}`,
+    description: `Interactive sandbox card ${i + 8}`,
+    gradient: "from-zinc-500 via-zinc-400 to-zinc-600",
+  })),
+];
 
 // Bands (each band fills 12 columns) - all items use rowSpan = 2
 const bands: number[][] = [
@@ -37,30 +82,39 @@ function buildPlacements(bandsSpec: number[][]) {
 
 const placements = buildPlacements(bands);
 
-function PlaygroundCard({ index }: CardSpec & { index: number }) {
-  const gradients = [
-    "from-pink-400 via-red-400 to-yellow-400",
-    "from-indigo-500 via-purple-500 to-pink-500",
-    "from-green-400 via-teal-400 to-cyan-400",
-    "from-yellow-300 via-orange-300 to-red-300",
-    "from-sky-400 via-blue-400 to-indigo-400",
-  ];
+function PlaygroundCard({ title, description, href, gradient }: CardSpec) {
+  const g = gradient ?? "from-zinc-500 via-zinc-400 to-zinc-600";
 
-  const g = gradients[index % gradients.length];
+  const isActive = !!href;
 
-  return (
+  const content = (
     <motion.div
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.99 }}
-      className={`w-full h-full overflow-hidden bg-gradient-to-br ${g} relative flex items-center justify-center`}
+      className={`w-full h-full overflow-hidden bg-gradient-to-br ${g} relative flex items-center justify-center ${isActive ? "cursor-pointer" : ""}`}
     >
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-white to-transparent" />
-      <div className="z-10 text-center text-white">
-        <h3 className="text-2xl font-bold mb-1">Coming Soon</h3>
-        <p className="text-sm opacity-90">Page Under Construction</p>
+      <div className="z-10 text-center text-white px-4">
+        {isActive ? (
+          <>
+            <h3 className="text-2xl font-bold mb-1">{title}</h3>
+            <p className="text-sm opacity-90">{description}</p>
+          </>
+        ) : (
+          <>
+            <h3 className="text-2xl font-bold mb-1">Coming Soon</h3>
+            <p className="text-sm opacity-90">Page Under Construction</p>
+          </>
+        )}
       </div>
     </motion.div>
   );
+
+  if (href) {
+    return <Link href={href} className="block w-full h-full">{content}</Link>;
+  }
+
+  return content;
 }
 
 export default function PlaygroundPage() {
@@ -69,10 +123,13 @@ export default function PlaygroundPage() {
       <div className="max-w-full mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <div className="mb-6 text-pink">
-              <TypingEffect text="Playground" />
+            <div className="mb-6">
+              <TypingEffect
+                text="Playground"
+                className="text-[29px] text-blackish sm:text-[46px] font-normal font-roboto tracking-tighter md:leading-[4rem] dark:text-whitish"
+              />
             </div>
-            <p className="text-neutral-500">Ongoing academic projects, experiments, and explorations at UCSC.</p>
+            <p className="text-neutral-500">Academic projects, experiments, and explorations at UCSC.</p>
           </div>
         </div>
 
@@ -89,7 +146,7 @@ export default function PlaygroundPage() {
 
             return (
               <div key={`desk-${idx}`} style={style}>
-                <PlaygroundCard title={p.title} description={p.description} index={idx} />
+                <PlaygroundCard title={p.title} description={p.description} href={p.href} gradient={p.gradient} />
               </div>
             );
           })}
@@ -99,7 +156,7 @@ export default function PlaygroundPage() {
         <div className="grid grid-cols-12 gap-0 lg:hidden auto-rows-[140px]">
           {projects.map((p, idx) => (
             <div key={`mob-${idx}`} className={`col-span-12 sm:col-span-6`}> 
-              <PlaygroundCard title={p.title} description={p.description} index={idx} />
+              <PlaygroundCard title={p.title} description={p.description} href={p.href} gradient={p.gradient} />
             </div>
           ))}
         </div>
