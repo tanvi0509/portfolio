@@ -1,10 +1,7 @@
 "use client";
 
 import React from "react";
-import images from "@/assets/images.json";
 
-const HERO_DESKTOP = images.envox.heroimage;
-const HERO_MOBILE = images.envox.heroimagemobile;
 const PROTO_LINK =
   "https://www.figma.com/proto/hcBmhqCOrmw4dRg5xg0vV2/home-page?node-id=2-2&t=MtfPBwUAYJceMe5B-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A2&show-proto-sidebar=1";
 const SHEET_LINK =

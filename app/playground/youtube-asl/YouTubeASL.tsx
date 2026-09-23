@@ -627,7 +627,7 @@ export default function YouTubeASL() {
                     <h3>Hi-fi Figma prototype</h3>
                   </div>
                   <p>
-                    We rebuilt the prototype on a real YouTube page. The "Interpretations" sub-menu (nestled under
+                    We rebuilt the prototype on a real YouTube page. The &quot;Interpretations&quot; sub-menu (nestled under
                     Subtitles/CC) offered multiple sign languages, ASL, BSL, LSF, CSL, ISPL, making it clear this was
                     not just an American feature. The pip window defaulted to the top-right corner but was fully
                     movable and resizable.
@@ -659,8 +659,8 @@ export default function YouTubeASL() {
             <h3>The design decision I keep thinking about</h3>
             <p>
               One of our most deliberate choices was where to place the ASL option in the UI. Putting it under
-              "Subtitles/CC" was intentional but also complicated, it signals that sign language is a form of
-              captioning, which is not quite right culturally. We labeled it "Interpretations" as a sub-category to
+              &quot;Subtitles/CC&quot; was intentional but also complicated, it signals that sign language is a form of
+              captioning, which is not quite right culturally. We labeled it &quot;Interpretations&quot; as a sub-category to
               begin drawing that distinction, but it is a conversation that deserves more iteration.
             </p>
             <p>
