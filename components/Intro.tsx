@@ -15,12 +15,12 @@ export default function Intro() {
       animate={{ opacity: 1 }}
       className="container mx-auto min-h-[calc(100vh-12rem)]"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-16 items-center px-4 pt-16 pb-8">
-        <div className="order-1 lg:order-1 lg:mt-[90px] lg:ml-[60px]">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 lg:gap-12 items-center px-4 pt-8 lg:pt-10 pb-8 lg:pb-10">
+        <div className="order-1 lg:order-1 lg:mt-8 lg:ml-8">
           <IntroImage src={cartoonTanvi} alt="Tanvi's portrait illustration" />
         </div>
 
-        <div className="order-2 lg:order-2 flex flex-col justify-center mt-8 lg:mt-[90px]">
+        <div className="order-2 lg:order-2 flex flex-col justify-center mt-3 lg:mt-6">
           <IntroContent />
         </div>
       </div>

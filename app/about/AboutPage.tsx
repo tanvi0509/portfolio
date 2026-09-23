@@ -32,6 +32,33 @@ export default function AboutPage() {
               priority
             />
           </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <div>
+              <div className="relative aspect-[16/11] rounded-2xl overflow-hidden">
+                <Image
+                  src="/cohesityintern.png"
+                  alt="With the Cohesity internship team"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 50vw, 16vw"
+                />
+              </div>
+              <p className="mt-2 text-sm opacity-60">With the Cohesity internship team</p>
+            </div>
+            <div>
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">
+                <Image
+                  src="/aboutmeimage.jpeg"
+                  alt="Celebrating a milestone at UC Santa Cruz"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 50vw, 16vw"
+                />
+              </div>
+              <p className="mt-2 text-sm opacity-60">Celebrating at UC Santa Cruz</p>
+            </div>
+          </div>
         </motion.div>
 
         {/* Content Section */}

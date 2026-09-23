@@ -18,7 +18,7 @@ export function IntroImage({ src, alt }: IntroImageProps) {
         duration: 0.7,
         ease: [0.34, 1.56, 0.64, 1],
       }}
-      className="relative w-full max-w-[760px] mx-auto"
+      className="relative w-full max-w-[560px] lg:max-w-[620px] mx-auto"
     >
       <div className="relative aspect-square rounded-full overflow-hidden mt-8 shadow-[0_20px_40px_rgba(2,6,23,0.12)] dark:shadow-[0_20px_40px_rgba(255,255,255,0.04)]">
         <Image

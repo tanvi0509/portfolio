@@ -35,27 +35,25 @@ const ThemeToggle = () => {
 
   return (
     <div
-      className="relative w-16 h-8 flex items-center bg-white/10 backdrop-blur-md border border-white/20 cursor-pointer 
-      rounded-full p-1"
+      className="relative h-8 w-16 cursor-pointer rounded-full border border-[#FF3E88]/40 bg-[#FF3E88]/15 p-1 backdrop-blur-md"
       onClick={() => setDarkMode(!darkMode)}
     >
       <FaMoon
-        className={`text-gray-800 dark:text-white ${
+        className={`absolute left-2 top-1/2 -translate-y-1/2 text-[#FF3E88] ${
           darkMode ? "opacity-100" : "opacity-50"
         }`}
-        size={18}
+        size={14}
       />
       <div
-        className={`absolute w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 ${
-          darkMode ? "bg-black" : "bg-white"
+        className={`absolute h-6 w-6 rounded-full bg-[#FF3E88] shadow-md transition-all duration-300 ${
+          darkMode ? "left-[2px]" : "left-[38px]"
         }`}
-        style={darkMode ? { left: "2px" } : { right: "2px" }}
       ></div>
       <BsSunFill
-        className={`ml-auto text-red-700 ${
+        className={`absolute right-2 top-1/2 -translate-y-1/2 text-[#FF3E88] ${
           darkMode ? "opacity-50" : "opacity-100"
         }`}
-        size={18}
+        size={13}
       />
     </div>
   );

@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<title>Sales Assistant: Guided Workflow Layer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* ============================================================
+   FLUENT 2 DESIGN TOKENS
+   Mirrors the token set Copilot Studio / M365 Copilot are built
+   on, so this layer sits natively alongside stock Copilot UI.
+   ============================================================ */
+:root{
+  /* Neutrals — light */
+  --bg-canvas:#f5f5f5;
+  --bg-surface:#ffffff;
+  --bg-surface-alt:#fafafa;
+  --bg-sidebar:#f0f0f0;
+  --bg-hover:#f0f0f0;
+  --bg-pressed:#e0e0e0;
+  --bg-selected:#ebf3fc;
+
+  --fg-1:#242424;
+  --fg-2:#424242;
+  --fg-3:#616161;
+  --fg-4:#707070;
+  --fg-disabled:#bdbdbd;
+
+  --stroke-1:#d1d1d1;
+  --stroke-2:#e0e0e0;
+  --stroke-focus:#0f6cbd;
+
+  /* Brand — Copilot Studio blue */
+  --brand:#0f6cbd;
+  --brand-hover:#115ea3;
+  --brand-pressed:#0c3b5e;
+  --brand-fg:#0f6cbd;
+  --brand-subtle:#ebf3fc;
+  --brand-subtle-hover:#dcecfa;
+
+  /* Agent identity — Copilot's indigo/violet */
+  --agent-1:#8b5cf6;
+  --agent-2:#6366f1;
+
+  /* Accent tints for workflow icons (light) */
+  --t-purple-bg:#f0ebfc; --t-purple-fg:#7c3aed;
+  --t-blue-bg:#ebf3fc;   --t-blue-fg:#0f6cbd;
+  --t-teal-bg:#e0f5f3;   --t-teal-fg:#0b6a61;
+  --t-green-bg:#e4f6ed;  --t-green-fg:#0e7040;
+  --t-orange-bg:#fdf1e3; --t-orange-fg:#9a5b06;
+  --t-pink-bg:#fceef5;   --t-pink-fg:#b4227e;
+
+  --warn-bg:#fdf1e3; --warn-fg:#8a4d05; --warn-stroke:#f0d9b8;
+
+  /* Fluent corner radii — notably tighter than generic web UI */
+  --r-sm:2px; --r-md:4px; --r-lg:6px; --r-xl:8px; --r-circle:9999px;
+
+  /* Fluent elevation */
+  --shadow-2:0 1px 2px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12);
+  --shadow-4:0 2px 4px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12);
+  --shadow-8:0 4px 8px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12);
+  --shadow-16:0 8px 16px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12);
+  --shadow-28:0 14px 28px rgba(0,0,0,.24), 0 0 8px rgba(0,0,0,.20);
+
+  --font:'Segoe UI Variable Text','Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif;
+  --font-display:'Segoe UI Variable Display','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+
+[data-theme="dark"]{
+  --bg-canvas:#141414;
+  --bg-surface:#292929;
+  --bg-surface-alt:#1f1f1f;
+  --bg-sidebar:#1f1f1f;
+  --bg-hover:#383838;
+  --bg-pressed:#424242;
+  --bg-selected:#0c3b5e;
+
+  --fg-1:#ffffff;
+  --fg-2:#d6d6d6;
+  --fg-3:#adadad;
+  --fg-4:#949494;
+  --fg-disabled:#5c5c5c;
+
+  --stroke-1:#525252;
+  --stroke-2:#3d3d3d;
+  --stroke-focus:#479ef5;
+
+  --brand:#115ea3;
+  --brand-hover:#0f6cbd;
+  --brand-pressed:#0c3b5e;
+  --brand-fg:#479ef5;
+  --brand-subtle:#0c3b5e;
+  --brand-subtle-hover:#0f548c;
+
+  --agent-1:#a78bfa;
+  --agent-2:#818cf8;
+
+  --t-purple-bg:#2d2445; --t-purple-fg:#c4b5fd;
+  --t-blue-bg:#0c3b5e;   --t-blue-fg:#7cc0f5;
+  --t-teal-bg:#123b38;   --t-teal-fg:#6fd1c7;
+  --t-green-bg:#123524;  --t-green-fg:#6fcf97;
+  --t-orange-bg:#3d2c14; --t-orange-fg:#e8b06a;
+  --t-pink-bg:#3d1f31;   --t-pink-fg:#f0a0cd;
+
+  --warn-bg:#3d2c14; --warn-fg:#e8b06a; --warn-stroke:#5c451f;
+
+  --shadow-2:0 1px 2px rgba(0,0,0,.28), 0 0 2px rgba(0,0,0,.24);
+  --shadow-4:0 2px 4px rgba(0,0,0,.28), 0 0 2px rgba(0,0,0,.24);
+  --shadow-8:0 4px 8px rgba(0,0,0,.28), 0 0 2px rgba(0,0,0,.24);
+  --shadow-16:0 8px 16px rgba(0,0,0,.28), 0 0 2px rgba(0,0,0,.24);
+  --shadow-28:0 14px 28px rgba(0,0,0,.4), 0 0 8px rgba(0,0,0,.32);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;height:100%;}
+body{
+  font-family:var(--font);
+  font-size:14px;
+  line-height:20px;
+  color:var(--fg-1);
+  background:var(--bg-canvas);
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;font-size:inherit;color:inherit;}
+:focus-visible{outline:2px solid var(--stroke-focus);outline-offset:2px;border-radius:var(--r-md);}
+:focus:not(:focus-visible){outline:none;}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+}
+
+.app{display:flex;height:100vh;overflow:hidden;background:var(--bg-canvas);}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+  width:260px;flex-shrink:0;background:var(--bg-sidebar);
+  border-right:1px solid var(--stroke-2);
+  display:flex;flex-direction:column;padding:12px 8px;overflow-y:auto;
+}
+.seg{display:flex;background:var(--bg-pressed);border-radius:var(--r-lg);padding:2px;margin:0 4px 12px;}
+.seg button{
+  flex:1;border:none;background:transparent;padding:5px 0;border-radius:var(--r-md);
+  font-size:13px;font-weight:600;color:var(--fg-3);cursor:pointer;
+}
+.seg button[aria-selected="true"]{background:var(--bg-surface);color:var(--fg-1);box-shadow:var(--shadow-2);}
+
+.nav-item{
+  display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border:none;
+  background:transparent;border-radius:var(--r-md);font-size:14px;color:var(--fg-2);
+  cursor:pointer;text-align:left;
+}
+.nav-item:hover{background:var(--bg-hover);}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;color:var(--fg-3);}
+
+.nav-group{
+  display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--fg-3);padding:0 8px;margin:14px 0 4px;
+}
+.nav-group svg{width:12px;height:12px;}
+
+.agent-row{
+  display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border:none;
+  background:transparent;border-radius:var(--r-md);font-size:14px;color:var(--fg-2);
+  cursor:pointer;text-align:left;
+}
+.agent-row:hover{background:var(--bg-hover);}
+.agent-row[aria-current="true"]{background:var(--brand);color:#fff;font-weight:600;}
+[data-theme="dark"] .agent-row[aria-current="true"]{background:var(--brand);color:#fff;}
+.agent-glyph{
+  width:22px;height:22px;border-radius:var(--r-md);flex-shrink:0;
+  background:var(--tint-bg);color:var(--tint-fg);
+  display:flex;align-items:center;justify-content:center;
+}
+.agent-glyph svg{width:13px;height:13px;}
+
+.hist{
+  display:block;width:100%;padding:6px 8px;border:none;background:transparent;
+  border-radius:var(--r-md);font-size:14px;color:var(--fg-2);cursor:pointer;text-align:left;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.hist:hover{background:var(--bg-hover);}
+
+/* ================= MAIN ================= */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg-surface);}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 16px;height:48px;flex-shrink:0;border-bottom:1px solid var(--stroke-2);
+}
+.topbar-l{display:flex;align-items:center;gap:8px;min-width:0;}
+.topbar-title{font-size:14px;font-weight:600;color:var(--fg-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-r{display:flex;align-items:center;gap:2px;}
+
+.ibtn{
+  width:32px;height:32px;border-radius:var(--r-md);border:none;background:transparent;
+  color:var(--fg-3);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  flex-shrink:0;transition:background .1s;
+}
+.ibtn:hover{background:var(--bg-hover);color:var(--fg-1);}
+.ibtn:active{background:var(--bg-pressed);}
+.ibtn svg{width:16px;height:16px;}
+
+.stage{flex:1;display:flex;flex-direction:column;min-height:0;}
+
+/* ================= LANDING ================= */
+.landing{
+  flex:1;overflow-y:auto;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:32px 20px;
+}
+.landing-col{width:100%;max-width:680px;display:flex;flex-direction:column;align-items:center;}
+
+.hero-mark{
+  width:48px;height:48px;border-radius:var(--r-xl);margin-bottom:12px;
+  background:linear-gradient(135deg,var(--agent-1),var(--agent-2));
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-4);
+}
+.hero-mark svg{width:24px;height:24px;color:#fff;}
+.hero-title{
+  font-family:var(--font-display);font-size:28px;line-height:36px;font-weight:600;
+  margin:0 0 2px;letter-spacing:-.01em;
+}
+.hero-sub{font-size:14px;color:var(--fg-3);margin:0 0 24px;}
+.hero-sub a{color:var(--brand-fg);text-decoration:none;font-weight:600;}
+.hero-sub a:hover{text-decoration:underline;}
+
+/* ================= COMPOSER ================= */
+.composer-wrap{width:100%;position:relative;}
+.composer{
+  background:var(--bg-surface);border:1px solid var(--stroke-1);border-radius:var(--r-xl);
+  padding:10px 12px 8px;box-shadow:var(--shadow-2);transition:border-color .12s, box-shadow .12s;
+}
+.composer:focus-within{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand), var(--shadow-2);}
+.composer textarea{
+  width:100%;border:none;outline:none;resize:none;background:transparent;
+  font-family:inherit;font-size:14px;line-height:20px;color:var(--fg-1);
+  min-height:20px;max-height:160px;padding:0;
+}
+.composer textarea::placeholder{color:var(--fg-4);}
+
+.composer-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;}
+.composer-bar-l,.composer-bar-r{display:flex;align-items:center;gap:2px;}
+
+.wf-chip{
+  display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;
+  border:1px solid var(--stroke-1);background:var(--bg-surface);color:var(--fg-2);
+  border-radius:var(--r-circle);font-size:12px;font-weight:600;cursor:pointer;
+  transition:background .1s,border-color .1s,color .1s;margin-left:4px;
+}
+.wf-chip:hover{background:var(--bg-hover);border-color:var(--stroke-1);color:var(--fg-1);}
+.wf-chip[aria-expanded="true"]{background:var(--brand-subtle);border-color:var(--brand);color:var(--brand-fg);}
+.wf-chip svg{width:14px;height:14px;}
+
+.send{
+  width:32px;height:32px;border-radius:var(--r-md);border:none;cursor:pointer;
+  background:transparent;color:var(--fg-disabled);
+  display:flex;align-items:center;justify-content:center;transition:background .1s,color .1s;
+}
+.send[data-ready="true"]{background:var(--brand);color:#fff;}
+.send[data-ready="true"]:hover{background:var(--brand-hover);}
+.send svg{width:16px;height:16px;}
+
+/* ================= GUIDED PICKER ================= */
+.picker-inline{width:100%;margin-top:20px;}
+.picker-head{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:13px;font-weight:600;color:var(--fg-3);margin-bottom:8px;padding:0 2px;
+}
+
+.wf-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  max-height:352px;overflow-y:auto;padding:3px;
+}
+
+/* ---- Workflow card ----
+   Each card carries its workflow's tint as a variable, so a faint corner
+   wash, the glyph, the hover border and the go-arrow all read as one family. */
+.wf-card{
+  position:relative;overflow:hidden;text-align:left;cursor:pointer;
+  padding:14px;background:var(--bg-surface);
+  border:1px solid var(--stroke-2);border-radius:var(--r-xl);
+  transition:transform .16s cubic-bezier(.16,1,.3,1),box-shadow .16s,border-color .16s;
+}
+.wf-card::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(125% 95% at 100% 0%, var(--tint-bg) 0%, transparent 58%);
+  opacity:.5;transition:opacity .2s;
+}
+.wf-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-8);border-color:var(--tint-fg);}
+.wf-card:hover::before{opacity:1;}
+.wf-card:active{transform:translateY(0);box-shadow:var(--shadow-2);transition-duration:.06s;}
+.wf-card.is-add{border-style:dashed;border-color:var(--stroke-1);}
+.wf-card.is-add::before{opacity:0;}
+.wf-card.is-add:hover{border-style:dashed;}
+
+.wf-top{
+  position:relative;display:flex;align-items:flex-start;justify-content:space-between;
+  gap:8px;margin-bottom:10px;
+}
+.wf-glyph{
+  width:30px;height:30px;border-radius:var(--r-lg);flex-shrink:0;
+  background:var(--tint-bg);color:var(--tint-fg);
+  display:flex;align-items:center;justify-content:center;
+}
+.wf-glyph svg{width:16px;height:16px;}
+
+.wf-go{
+  flex-shrink:0;width:16px;height:16px;color:var(--tint-fg);
+  opacity:0;transform:translate(-4px,2px);transition:opacity .16s,transform .16s;
+}
+.wf-card:hover .wf-go{opacity:1;transform:none;}
+
+.wf-name{
+  position:relative;display:block;font-size:13px;line-height:18px;font-weight:600;
+  color:var(--fg-1);margin:0 0 3px;
+}
+.wf-desc{position:relative;display:block;font-size:12px;line-height:16px;color:var(--fg-3);margin:0;}
+
+.badge{
+  flex-shrink:0;font-size:9px;line-height:15px;font-weight:700;letter-spacing:.04em;
+  padding:0 5px;border-radius:var(--r-sm);white-space:nowrap;
+  background:var(--warn-bg);color:var(--warn-fg);border:1px solid var(--warn-stroke);
+}
+
+/* Tints — carry variables only, so any container can inherit a workflow's identity */
+.tint-purple{--tint-bg:var(--t-purple-bg);--tint-fg:var(--t-purple-fg);}
+.tint-blue  {--tint-bg:var(--t-blue-bg);  --tint-fg:var(--t-blue-fg);}
+.tint-teal  {--tint-bg:var(--t-teal-bg);  --tint-fg:var(--t-teal-fg);}
+.tint-green {--tint-bg:var(--t-green-bg); --tint-fg:var(--t-green-fg);}
+.tint-orange{--tint-bg:var(--t-orange-bg);--tint-fg:var(--t-orange-fg);}
+.tint-pink  {--tint-bg:var(--t-pink-bg);  --tint-fg:var(--t-pink-fg);}
+
+/* ---- Action panel ----
+   Inherits the tint of the workflow you came from: header wash, hover rail
+   and arrow all carry that colour, so you always know where you are. */
+.actions{
+  background:var(--bg-surface);border:1px solid var(--stroke-2);
+  border-radius:var(--r-xl);box-shadow:var(--shadow-2);overflow:hidden;
+}
+.actions-head{
+  display:flex;align-items:center;gap:10px;padding:11px 12px;
+  border-bottom:1px solid var(--stroke-2);
+  background:linear-gradient(90deg,var(--tint-bg) 0%,transparent 72%);
+}
+.actions-head .wf-glyph{width:26px;height:26px;border-radius:var(--r-md);}
+.actions-head .wf-glyph svg{width:14px;height:14px;}
+.actions-title{font-size:13px;line-height:18px;font-weight:600;color:var(--fg-1);}
+.actions-count{
+  margin-left:auto;font-size:11px;font-weight:600;color:var(--fg-4);
+  padding-right:2px;white-space:nowrap;
+}
+
+.actions-list{
+  display:flex;flex-direction:column;gap:1px;
+  padding:6px;max-height:300px;overflow-y:auto;
+}
+.act{
+  position:relative;display:flex;align-items:center;gap:12px;
+  width:100%;text-align:left;padding:11px 12px 11px 14px;
+  border:none;background:transparent;border-radius:var(--r-lg);
+  cursor:pointer;transition:background .12s;
+}
+/* accent rail grows out of the left edge on hover */
+.act::before{
+  content:'';position:absolute;left:4px;top:50%;transform:translateY(-50%);
+  width:2px;height:0;border-radius:var(--r-circle);background:var(--tint-fg);
+  transition:height .18s cubic-bezier(.16,1,.3,1);
+}
+.act:hover{background:var(--bg-hover);}
+.act:hover::before{height:56%;}
+.act:active{background:var(--bg-pressed);}
+
+.act-body{flex:1;min-width:0;}
+.act-t{display:block;font-size:13px;line-height:18px;font-weight:600;color:var(--fg-1);}
+.act-d{display:block;font-size:12px;line-height:16px;color:var(--fg-3);margin-top:2px;}
+
+/* arrow dropping into a field — literally what clicking does */
+.act-go{
+  flex-shrink:0;width:16px;height:16px;color:var(--fg-4);
+  opacity:0;transform:translateX(-4px);transition:opacity .16s,transform .16s,color .16s;
+}
+.act:hover .act-go{opacity:1;transform:none;color:var(--tint-fg);}
+
+.act.is-muted .act-t{color:var(--fg-3);font-weight:500;}
+.act.is-muted .act-go{display:none;}
+
+/* Popover variant (mid-conversation) */
+.popover{
+  position:absolute;bottom:calc(100% + 8px);left:0;right:0;z-index:30;
+  background:var(--bg-surface);border:1px solid var(--stroke-1);
+  border-radius:var(--r-xl);box-shadow:var(--shadow-28);overflow:hidden;
+  animation:pop .12s ease-out;
+}
+@keyframes pop{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.popover-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 8px 8px 12px;border-bottom:1px solid var(--stroke-2);
+  font-size:13px;font-weight:600;color:var(--fg-2);
+}
+.popover-body{padding:8px;max-height:320px;overflow-y:auto;}
+.popover-body .wf-grid{max-height:none;overflow:visible;grid-template-columns:repeat(3,1fr);padding:0;}
+.popover-body .actions{border:none;box-shadow:none;border-radius:0;}
+.popover-body .actions-list{max-height:264px;padding:6px 0 0;}
+
+/* ================= TRANSCRIPT ================= */
+.transcript{flex:1;overflow-y:auto;padding:24px 20px 8px;}
+.thread{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:20px;}
+
+.turn-user{align-self:flex-end;max-width:82%;}
+.bubble{
+  background:var(--bg-selected);border:1px solid var(--stroke-2);
+  border-radius:var(--r-xl);padding:10px 14px;font-size:14px;line-height:20px;
+  color:var(--fg-1);white-space:pre-wrap;word-break:break-word;
+}
+[data-theme="dark"] .bubble{border-color:transparent;}
+
+.turn-agent{display:flex;gap:12px;max-width:100%;}
+.turn-glyph{
+  width:28px;height:28px;border-radius:var(--r-lg);flex-shrink:0;margin-top:1px;
+  background:linear-gradient(135deg,var(--agent-1),var(--agent-2));
+  display:flex;align-items:center;justify-content:center;
+}
+.turn-glyph svg{width:15px;height:15px;color:#fff;}
+.turn-body{min-width:0;flex:1;}
+.turn-name{font-size:13px;font-weight:600;color:var(--fg-1);margin-bottom:3px;}
+.turn-text{font-size:14px;line-height:21px;color:var(--fg-1);word-break:break-word;}
+.turn-text strong{font-weight:600;}
+.turn-text em{color:var(--fg-3);font-style:italic;}
+
+.turn-tools{display:flex;gap:1px;margin-top:8px;margin-left:-6px;}
+.turn-tools .ibtn{width:28px;height:28px;}
+.turn-tools .ibtn svg{width:14px;height:14px;}
+
+.dots{display:flex;gap:4px;align-items:center;height:21px;}
+.dots i{
+  width:6px;height:6px;border-radius:50%;background:var(--fg-4);
+  animation:pulse 1.3s ease-in-out infinite;
+}
+.dots i:nth-child(2){animation-delay:.18s;}
+.dots i:nth-child(3){animation-delay:.36s;}
+@keyframes pulse{0%,70%,100%{opacity:.25;transform:scale(.85);}35%{opacity:1;transform:scale(1);}}
+
+.composer-dock{flex-shrink:0;padding:8px 20px 20px;background:var(--bg-surface);}
+.composer-dock-inner{max-width:680px;margin:0 auto;position:relative;}
+
+.footnote{
+  text-align:center;font-size:11px;line-height:16px;color:var(--fg-4);
+  margin-top:8px;max-width:680px;margin-left:auto;margin-right:auto;
+}
+
+/* ================= SCROLLBARS ================= */
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-thumb{background:var(--stroke-1);border-radius:var(--r-circle);border:3px solid transparent;background-clip:content-box;}
+::-webkit-scrollbar-thumb:hover{background:var(--fg-4);background-clip:content-box;}
+::-webkit-scrollbar-track{background:transparent;}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:1000px){
+  .wf-grid,.popover-body .wf-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:820px){
+  .sidebar{display:none;}
+}
+@media (max-width:560px){
+  .wf-grid,.popover-body .wf-grid{grid-template-columns:1fr;}
+  .hero-title{font-size:24px;line-height:30px;}
+  .transcript{padding:16px 12px 8px;}
+  .composer-dock{padding:8px 12px 16px;}
+  .landing{padding:20px 12px;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <nav class="sidebar" aria-label="Navigation">
+    <div class="seg" role="tablist">
+      <button role="tab" aria-selected="true">Chat</button>
+      <button role="tab" aria-selected="false">Cowork</button>
+    </div>
+    <button class="nav-item" id="nav-new"></button>
+    <button class="nav-item" id="nav-search"></button>
+    <button class="nav-item" id="nav-library"></button>
+
+    <div class="nav-group" id="grp-agents"></div>
+    <div id="agent-list"></div>
+
+    <div class="nav-group" id="grp-chats"></div>
+    <div id="chat-list"></div>
+  </nav>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-l">
+        <button class="ibtn" id="btn-back" aria-label="Back"></button>
+        <span class="topbar-title">Sales Assistant</span>
+      </div>
+      <div class="topbar-r" id="topbar-actions"></div>
+    </header>
+    <div class="stage" id="stage"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   ICONS — Fluent-style line glyphs, 20x20 grid
+   ========================================================= */
+const I = {
+  compose:'<path d="M13.5 3.8a1.8 1.8 0 0 1 2.6 2.6L8.4 14 5 15l1-3.4 7.5-7.8Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
+  search:'<circle cx="9" cy="9" r="5.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M12.8 12.8 16.5 16.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+  book:'<path d="M4 4.6h4.5A1.5 1.5 0 0 1 10 6.1v9.3a1.2 1.2 0 0 0-1.2-1.2H4V4.6Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M16 4.6h-4.5A1.5 1.5 0 0 0 10 6.1v9.3a1.2 1.2 0 0 1 1.2-1.2H16V4.6Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
+  chevron:'<path d="m6 8 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
+  back:'<path d="M12 5 7 10l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
+  close:'<path d="m5.5 5.5 9 9m0-9-9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  grid:'<rect x="3.2" y="3.2" width="6" height="6" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="10.8" y="3.2" width="6" height="6" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3.2" y="10.8" width="6" height="6" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="10.8" y="10.8" width="6" height="6" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.4"/>',
+  plus:'<path d="M10 4.6v10.8M4.6 10h10.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  mic:'<rect x="7.6" y="2.8" width="4.8" height="8.6" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5.2 10.2a4.8 4.8 0 0 0 9.6 0M10 15v2.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+  send:'<path d="M3.4 10 16.6 4.2 11.6 17l-2.2-5.4L3.4 10Z" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>',
+  bot:'<rect x="4" y="6.4" width="12" height="9.2" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.4V3.4M7.6 10.6v.6M12.4 10.6v.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  copy:'<rect x="7.2" y="7.2" width="8.6" height="8.6" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.35"/><path d="M12.8 4.4H5.8a1.4 1.4 0 0 0-1.4 1.4v7" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>',
+  like:'<path d="M7.6 8.8 10 3.6c1 0 1.7.9 1.5 1.9l-.6 2.6h3.6a1.3 1.3 0 0 1 1.3 1.6l-1.1 4.8a1.5 1.5 0 0 1-1.5 1.2H7.6V8.8Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/><path d="M7.6 8.8v6.9H5.4a1 1 0 0 1-1-1V9.8a1 1 0 0 1 1-1h2.2Z" fill="none" stroke="currentColor" stroke-width="1.35"/>',
+  dislike:'<path d="M12.4 11.2 10 16.4c-1 0-1.7-.9-1.5-1.9l.6-2.6H5.5a1.3 1.3 0 0 1-1.3-1.6l1.1-4.8A1.5 1.5 0 0 1 6.8 4.3h5.6v6.9Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/><path d="M12.4 11.2V4.3h2.2a1 1 0 0 1 1 1v4.9a1 1 0 0 1-1 1h-2.2Z" fill="none" stroke="currentColor" stroke-width="1.35"/>',
+  edit:'<path d="m12.6 4.6 2.8 2.8-8 8-3.4.6.6-3.4 8-8Z" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/>',
+  more:'<circle cx="5" cy="10" r="1.3" fill="currentColor"/><circle cx="10" cy="10" r="1.3" fill="currentColor"/><circle cx="15" cy="10" r="1.3" fill="currentColor"/>',
+  sun:'<circle cx="10" cy="10" r="3.6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10 2.6v1.8M10 15.6v1.8M17.4 10h-1.8M4.4 10H2.6M15.2 4.8l-1.3 1.3M6.1 13.9l-1.3 1.3M15.2 15.2l-1.3-1.3M6.1 6.1 4.8 4.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+  moon:'<path d="M16 11.6A6.6 6.6 0 0 1 8.4 4a6.8 6.8 0 1 0 7.6 7.6Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
+  comment:'<path d="M4 5.4h12v7.4H8.8L5.6 15.6v-2.8H4V5.4Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
+  bookmark:'<path d="M5.6 3.6h8.8v13l-4.4-3.2-4.4 3.2v-13Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>',
+  share:'<circle cx="15" cy="5" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="5" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="15" cy="15" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m7 8.9 6-2.8m0 7.8-6-2.8" stroke="currentColor" stroke-width="1.4"/>',
+  people:'<circle cx="8" cy="7.4" r="2.6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3.4 16c0-2.6 2.1-4.2 4.6-4.2s4.6 1.6 4.6 4.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M13.4 5.2a2.4 2.4 0 0 1 0 4.6M14.4 11.9c1.4.5 2.4 1.7 2.4 3.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+  /* workflow glyphs */
+  key:'<circle cx="7" cy="7" r="3.4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m9.5 9.5 6 6M13 13l1.6 1.6M11.4 11.4 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  chat:'<path d="M4 5.4h12v7.4H8.8L5.6 15.6v-2.8H4V5.4Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+  mail:'<rect x="3.2" y="5" width="13.6" height="10" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m3.8 6 6.2 4.8L16.2 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
+  shield:'<path d="M10 2.8 16 5v4.6c0 4.1-2.6 6.9-6 8-3.4-1.1-6-3.9-6-8V5l6-2.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+  target:'<circle cx="10" cy="10" r="6.6" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r=".9" fill="currentColor"/>',
+  calendar:'<rect x="3.4" y="4.4" width="13.2" height="12" rx="1.8" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.4 8h13.2M7 2.9v3M13 2.9v3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  briefcase:'<rect x="3.2" y="6.6" width="13.6" height="9.4" rx="1.7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.4 6.6V5.2a1.6 1.6 0 0 1 1.6-1.6h2a1.6 1.6 0 0 1 1.6 1.6v1.4M3.2 10.8h13.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  doc:'<path d="M5.6 3.4h5.8l3.4 3.4v9.8a1 1 0 0 1-1 1H5.6a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M11.2 3.6v3.4h3.4M7.4 10.6h5.2M7.4 13.4h5.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+  flag:'<path d="M5.4 17.2V3.4m0 1h9.4l-2.6 3.2 2.6 3.2H5.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
+  spark:'<path d="m10 3 1.5 4.3L16 8.8l-4.5 1.5L10 14.6 8.5 10.3 4 8.8l4.5-1.5L10 3Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="m15.2 13.4.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7.7-1.9Z" fill="currentColor" opacity=".55"/>',
+  plusCircle:'<circle cx="10" cy="10" r="6.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2.6 2.2"/><path d="M10 6.8v6.4M6.8 10h6.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>',
+  /* diagonal arrow — "open this workflow" */
+  go:'<path d="M6.6 13.4 13.4 6.6M8.2 6.6h5.2v5.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  /* plain forward arrow — "use this action" */
+  arrow:'<path d="M4.2 10h11.2m0 0-4-4m4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>'
+};
+const s = (n,cls='') => `<svg viewBox="0 0 20 20" class="${cls}" aria-hidden="true">${I[n]||''}</svg>`;
+
+const WORKFLOWS = [
+  { id:'account-research', label:'Account Research', desc:'Surface signals and context before you reach out', icon:'key', color:'purple',
+    actions:[
+      {title:'Build Account Brief', desc:'Business, environment, and priorities in one place',
+        prompt:'Build an account brief for [Company Name] covering their business, current environment, and priorities relevant to a data resilience conversation.',
+        response:'<strong>Account Brief — [Company Name]</strong><br><br>• Industry: [Industry] &nbsp;|&nbsp; Employees: [Size]<br>• Current data protection stack: [existing vendor/tools]<br>• Recent initiatives: [migration / expansion / compliance driver]<br><br><em>Use this as opening context for your first call.</em>'},
+      {title:'Identify Key Stakeholders', desc:'Who\'s likely involved in the decision',
+        prompt:'Identify the key stakeholders at [Company Name] likely involved in a data resilience purchase decision.',
+        response:'<strong>Key Stakeholders</strong><br><br>• <strong>CIO</strong> — infrastructure priorities, vendor consolidation<br>• <strong>CISO</strong> — ransomware recovery, compliance posture<br>• <strong>VP Infrastructure</strong> — day-to-day operational ownership<br>• <strong>Procurement</strong> — budget and contract terms'},
+      {title:'Assess Account Health & Risks', desc:'Engagement, support history, renewal risk',
+        prompt:'Assess the health and risk profile of the [Company Name] account based on usage, support history, and engagement signals.',
+        response:'<strong>Account Health Assessment</strong><br><br>• Engagement: [healthy / declining] based on recent touchpoints<br>• Support tickets: [count / severity trend]<br>• Renewal risk: [low / medium / high] — reason: [reason]'},
+      {title:'Identify Customer Priorities', desc:'What matters to them this year',
+        prompt:'What are [Company Name]\'s top business and technical priorities this year that relate to data resilience?',
+        response:'<strong>Customer Priorities</strong><br><br>• Reducing recovery time following recent industry ransomware headlines<br>• Consolidating tools after [merger / migration]<br>• Meeting [compliance requirement] before [deadline]'},
+      {title:'Identify Expansion Opportunities', desc:'Additional workloads or business units',
+        prompt:'Identify expansion opportunities within [Company Name]\'s existing footprint — additional workloads, business units, or use cases.',
+        response:'<strong>Expansion Opportunities</strong><br><br>• Extend coverage to [workload, e.g. M365 / SaaS]<br>• Business units not yet onboarded: [list]<br>• Add-on: cyber resilience / threat detection module'},
+      {title:'Prepare for Renewal Conversation', desc:'Talking points ahead of a renewal',
+        prompt:'Prepare talking points for an upcoming renewal conversation with [Company Name], renewing on [date].',
+        response:'<strong>Renewal Prep</strong><br><br>• Highlight value delivered: [recovery time improvement / incidents avoided]<br>• Resolve any open support issues before the call<br>• Introduce expansion as part of the renewal, not after'},
+      {title:'Review Customer Success Coverage', desc:'Engagement cadence and open items',
+        prompt:'Review the current customer success coverage and engagement cadence for [Company Name].',
+        response:'<strong>Customer Success Coverage</strong><br><br>• Last QBR: [date]<br>• Open action items: [list]<br>• Recommended next touchpoint: [timeframe]'}
+    ]},
+  { id:'competitive', label:'Competitive Intelligence', desc:'Position against a named competitor', icon:'chat', color:'blue',
+    actions:[
+      {title:'Compare Us to a Competitor', desc:'Side-by-side comparison',
+        prompt:'Compare Cohesity\'s [Product/Offering] against [Competitor].\n\nContext:\n• Competitor: [Veeam / Rubrik / Commvault / Other]',
+        response:'Cohesity and Rubrik both offer Microsoft 365 protection but differ in positioning. Cohesity leads on operational simplicity and cyber resilience with unified data protection and recovery workflows.<br><br><strong>Key Differentiators:</strong><br>• Unified platform for data protection and security<br>• Strong backup ecosystem<br>• Broad messaging on cyber resilience<br><br><strong>Discovery Questions:</strong><br>• How often do you test M365 recoveries?<br>• What challenges do you face today?<br>• Are cyber resilience initiatives driving this project?'},
+      {title:'Identify Competitive Differentiators', desc:'Highlight Cohesity strengths',
+        prompt:'What are Cohesity\'s strongest differentiators against [Competitor] for a [Persona] evaluating [Use Case]?',
+        response:'<strong>Top Differentiators vs. [Competitor]</strong><br><br>• Single platform across backup, security, and data access — fewer tools to manage<br>• Immutable, air-gapped architecture built in, not bolted on<br>• Faster time-to-recovery validated in independent benchmarks'},
+      {title:'Compare Licensing Models', desc:'Pricing and packaging differences',
+        prompt:'Compare licensing and packaging models between Cohesity and [Competitor] for [Use Case].',
+        response:'<strong>Licensing Comparison</strong><br><br>• Cohesity: capacity-based, unified across workloads<br>• [Competitor]: often modular, add-ons priced separately for security/DR<br><br><em>Net effect: total cost tends to favor Cohesity as workload count grows.</em>'},
+      {title:'Generate Competitive Discovery Questions', desc:'Uncover weaknesses and openings',
+        prompt:'Generate discovery questions that surface gaps in [Competitor]\'s current deployment at [Company Name].',
+        response:'<strong>Discovery Questions</strong><br><br>• How long does a full-environment recovery take today?<br>• Have you tested recovery from an isolated, air-gapped copy?<br>• How many separate tools does your team manage for backup vs. security?'},
+      {title:'Counter Competitor Claims', desc:'Respond to competitor messaging',
+        prompt:'[Competitor] claims [specific claim]. How should I respond to this in a customer conversation?',
+        response:'<strong>Suggested Response</strong><br><br>That claim usually reflects a best-case lab scenario. Ask what recovery time they see with production data volumes and multiple simultaneous restores — that\'s where architecture differences show up.'}
+    ]},
+  { id:'general-discovery', label:'General Discovery Questions', desc:'Understand the environment before you pitch', icon:'search', color:'teal',
+    actions:[
+      {title:'Understand Customer Environment', desc:'Current infrastructure and scope',
+        prompt:'Generate discovery questions to understand [Company Name]\'s current data environment and infrastructure.',
+        response:'<strong>Discovery Questions</strong><br><br>• What does your current backup and recovery environment look like?<br>• How many workloads / locations are in scope today?<br>• What\'s changed in your environment in the last 12 months?'},
+      {title:'Assess Recovery Readiness', desc:'How ready they really are',
+        prompt:'Generate discovery questions to assess [Company Name]\'s recovery readiness.',
+        response:'<strong>Recovery Readiness Questions</strong><br><br>• When did you last test a full recovery, not just a file restore?<br>• What\'s your target recovery time for critical systems?<br>• Have you validated backups are isolated from a ransomware blast radius?'},
+      {title:'Assess Security & Compliance', desc:'Frameworks and enforcement gaps',
+        prompt:'Generate discovery questions to assess [Company Name]\'s security and compliance posture.',
+        response:'<strong>Security & Compliance Questions</strong><br><br>• What compliance frameworks apply to your data (HIPAA, PCI, etc.)?<br>• How do you currently detect anomalous access to backup data?<br>• Who owns data retention policy enforcement?'},
+      {title:'Identify Business Drivers', desc:'Why this, why now',
+        prompt:'Generate discovery questions to identify the business drivers behind [Company Name]\'s current initiative.',
+        response:'<strong>Business Driver Questions</strong><br><br>• What triggered this evaluation right now?<br>• Is there a board-level or audit deadline driving urgency?<br>• What does success look like 12 months from now?'},
+      {title:'Generate Competitor-Specific Discovery Questions', desc:'Tailored to their current vendor',
+        prompt:'Generate discovery questions specific to uncovering gaps in [Competitor]\'s deployment at [Company Name].',
+        response:'<strong>Competitor-Specific Questions</strong><br><br>• How long does your current [Competitor] environment take to fully recover?<br>• Have you tested recovery from an isolated copy?<br>• What\'s been the biggest friction point with your current vendor?'}
+    ]},
+  { id:'five-steps', label:'5 Steps Discovery Questions', desc:'Protect, recover, detect, practice, optimize', icon:'shield', color:'green',
+    actions:[
+      {title:'Protect All Data', desc:'Coverage across the estate',
+        prompt:'Generate discovery questions around how [Company Name] protects all of its data today.',
+        response:'<strong>Protect Questions</strong><br><br>• What percentage of your data estate is currently backed up?<br>• Are there workloads (SaaS, edge, cloud-native) not yet covered?<br>• How is backup data protected from being altered or deleted?'},
+      {title:'Ensure Data Is Recoverable', desc:'Backed up vs. actually recoverable',
+        prompt:'Generate discovery questions around whether [Company Name]\'s data is truly recoverable, not just backed up.',
+        response:'<strong>Recoverability Questions</strong><br><br>• When was your last full-scale recovery test?<br>• What\'s the gap between your backup frequency and recovery point objective?<br>• Who validates that a restore actually works end-to-end?'},
+      {title:'Detect & Investigate Threats', desc:'Visibility into backup data itself',
+        prompt:'Generate discovery questions around [Company Name]\'s ability to detect and investigate threats within their data environment.',
+        response:'<strong>Detect & Investigate Questions</strong><br><br>• How would you know if ransomware was already inside a backup?<br>• Do you have anomaly detection on backup data itself?<br>• How long does it take to identify a clean recovery point after an incident?'},
+      {title:'Practice Resilience', desc:'Drills and tabletop exercises',
+        prompt:'Generate discovery questions around how often [Company Name] practices and tests their resilience plans.',
+        response:'<strong>Practice Resilience Questions</strong><br><br>• How often do you run tabletop exercises or live failover tests?<br>• Who\'s accountable for running these drills?<br>• What was the outcome of your last test — any surprises?'},
+      {title:'Optimize Data Risk Posture', desc:'Reduce exposure going forward',
+        prompt:'Generate discovery questions to help [Company Name] optimize their overall data risk posture.',
+        response:'<strong>Optimize Questions</strong><br><br>• Where is sensitive data duplicated or over-retained unnecessarily?<br>• How do you currently measure and report data risk to leadership?<br>• What would meaningfully reduce your risk exposure in the next 6 months?'}
+    ]},
+  { id:'cio-guide', label:'CIO Discovery Guide', desc:'Executive-level conversation prep', icon:'briefcase', color:'orange',
+    actions:[
+      {title:'Understand Business Priorities', desc:'What matters at the top',
+        prompt:'Generate discovery questions for a CIO conversation at [Company Name] focused on top business priorities.',
+        response:'<strong>CIO Discovery — Business Priorities</strong><br><br>• What are your top 3 priorities this year?<br>• How does data resilience tie into those priorities?<br>• Where is IT under the most pressure to show ROI?'},
+      {title:'Assess Cyber Resilience Concerns', desc:'Board-level risk appetite',
+        prompt:'Generate discovery questions to assess a CIO\'s cyber resilience concerns at [Company Name].',
+        response:'<strong>Cyber Resilience Questions</strong><br><br>• How confident are you in your ability to recover from a ransomware event today?<br>• Has your board asked about resilience recently?<br>• What keeps you up at night on this topic?'},
+      {title:'Understand Organizational Challenges', desc:'Team and structural gaps',
+        prompt:'Generate discovery questions to understand organizational challenges facing IT at [Company Name].',
+        response:'<strong>Organizational Challenge Questions</strong><br><br>• Where are the biggest gaps between IT and security teams today?<br>• Are you understaffed in any critical area?<br>• What\'s the biggest source of tool sprawl right now?'},
+      {title:'Identify Executive Stakeholders', desc:'Who else needs to be in the room',
+        prompt:'Identify the executive stakeholders likely to be involved in a CIO-level conversation at [Company Name].',
+        response:'<strong>Executive Stakeholders</strong><br><br>• CIO — primary sponsor<br>• CISO — security sign-off<br>• CFO — budget approval for larger deals<br>• Board risk committee — for regulated industries'},
+      {title:'Understand Compliance & Risk', desc:'Deadlines and audit findings',
+        prompt:'Generate discovery questions to understand [Company Name]\'s compliance and risk posture at the executive level.',
+        response:'<strong>Compliance & Risk Questions</strong><br><br>• What compliance deadlines are you tracking this year?<br>• Has a recent audit surfaced any gaps?<br>• How is risk currently reported to the board?'}
+    ]},
+  { id:'blueprint-motion', label:'Blueprint Motion Discovery', desc:'Assess specific technical motions', icon:'target', color:'pink',
+    actions:[
+      {title:'Assess M365 & SaaS Protection', desc:'Beyond native retention',
+        prompt:'Generate discovery questions to assess [Company Name]\'s M365 and SaaS data protection.',
+        response:'<strong>M365 & SaaS Questions</strong><br><br>• Do you rely on Microsoft\'s native retention for M365 recovery today?<br>• How would you recover from an accidental mass-deletion in SharePoint or Exchange?<br>• What other SaaS apps hold critical data outside of M365?'},
+      {title:'Assess Cloud Protection Strategy', desc:'Consistency across cloud and on-prem',
+        prompt:'Generate discovery questions to assess [Company Name]\'s cloud protection strategy.',
+        response:'<strong>Cloud Protection Questions</strong><br><br>• Which cloud providers host your critical workloads?<br>• Is protection consistent across on-prem and cloud today, or fragmented?<br>• How do you handle backup for cloud-native databases?'},
+      {title:'Assess Identity Resilience', desc:'Active Directory / Entra ID recovery',
+        prompt:'Generate discovery questions to assess [Company Name]\'s identity resilience (Active Directory / Entra ID).',
+        response:'<strong>Identity Resilience Questions</strong><br><br>• How would you recover Active Directory or Entra ID after a corruption event?<br>• Do you have an isolated, clean copy of your identity infrastructure?<br>• How long would identity recovery take today?'},
+      {title:'Assess Cyber Resilience', desc:'Overall maturity check',
+        prompt:'Generate discovery questions to assess [Company Name]\'s overall cyber resilience maturity.',
+        response:'<strong>Cyber Resilience Questions</strong><br><br>• How is resilience measured today — recovery time, data loss, or something else?<br>• What\'s your biggest known gap?<br>• Who owns cyber resilience across IT and security?'},
+      {title:'Assess NetBackup Modernization', desc:'Legacy environment fit',
+        prompt:'Generate discovery questions to assess [Company Name]\'s NetBackup environment and modernization needs.',
+        response:'<strong>NetBackup Modernization Questions</strong><br><br>• What version of NetBackup are you running today?<br>• What\'s driving a potential modernization — cost, complexity, or end-of-support?<br>• Are there workloads NetBackup doesn\'t cover well today?'},
+      {title:'Assess AI Readiness', desc:'Data governance for AI initiatives',
+        prompt:'Generate discovery questions to assess [Company Name]\'s data readiness for AI initiatives.',
+        response:'<strong>AI Readiness Questions</strong><br><br>• How well-classified is your data today?<br>• Do you know where sensitive data lives across your environment?<br>• What\'s blocking broader AI adoption from a data governance standpoint?'},
+      {title:'Assess Data Security & DSPM', desc:'Posture management maturity',
+        prompt:'Generate discovery questions to assess [Company Name]\'s data security posture management (DSPM) maturity.',
+        response:'<strong>DSPM Questions</strong><br><br>• Do you have visibility into where sensitive data lives across cloud and on-prem?<br>• How do you currently detect over-permissioned access to sensitive data?<br>• Has a data security gap ever contributed to an incident?'}
+    ]},
+  { id:'deal-strategy', label:'Deal Strategy', desc:'Plan the path to close', icon:'flag', color:'purple', pending:true,
+    actions:[
+      {title:'Actions not yet defined', desc:'This card is still under review by the enablement team',
+        prompt:'[This workflow — Deal Strategy — doesn\'t have defined actions yet. Ask the enablement team to add some, or describe what you need below.]',
+        response:'<em>This workflow doesn\'t have defined actions yet — it\'s still being reviewed by the enablement team. Have a common Deal Strategy task you run? Add it to the review doc.</em>'}
+    ]},
+  { id:'objection-handling', label:'Objection Handling', desc:'Respond to common pushback', icon:'shield', color:'orange',
+    actions:[
+      {title:'Respond to Common Objections', desc:'General-purpose objection responses',
+        prompt:'What are the most common objections we hear from prospects like [Company Name], and how should I respond?',
+        response:'<strong>Common Objections</strong><br><br>• "We\'re happy with our current vendor" — reframe around untested recovery risk<br>• "This is too expensive" — shift to total cost of ownership<br>• "We don\'t have bandwidth for a migration" — highlight phased rollout options'},
+      {title:'Create Objection Battlecard', desc:'Structured response for a specific objection',
+        prompt:'Create an objection battlecard for [specific objection] related to [Company Name]\'s deal.',
+        response:'<strong>Objection Battlecard</strong><br><br><strong>Objection:</strong> [specific objection]<br><strong>Why it comes up:</strong> [reason]<br><strong>Response:</strong> [recommended reframe]<br><strong>Proof point:</strong> [customer story / stat]'},
+      {title:'Handle Competitor Objections', desc:'"They already do this" pushback',
+        prompt:'How do I handle an objection where [Company Name] says [Competitor] already does this well enough?',
+        response:'<strong>Suggested Response</strong><br><br>Acknowledge, then differentiate: "[Competitor] covers the basics well — where teams usually feel the gap is in recovery speed and resilience once something actually goes wrong. Want me to show what that looks like side by side?"'},
+      {title:'Handle Budget Objections', desc:'No budget right now',
+        prompt:'How do I respond when [Company Name] says they don\'t have budget for this right now?',
+        response:'<strong>Suggested Response</strong><br><br>"Totally understand — would it help to look at this as part of next year\'s planning cycle, or is there a smaller starting scope that fits inside what\'s already budgeted?"'}
+    ]},
+  { id:'content-search', label:'Content Search', desc:'Find the right material fast', icon:'doc', color:'blue', pending:true,
+    actions:[
+      {title:'Actions not yet defined', desc:'This card is still under review by the enablement team',
+        prompt:'[This workflow — Content Search — doesn\'t have defined actions yet. Ask the enablement team to add some, or describe what you need below.]',
+        response:'<em>This workflow doesn\'t have defined actions yet — it\'s still being reviewed by the enablement team. Have a common Content Search task you run? Add it to the review doc.</em>'}
+    ]},
+  { id:'customer-success', label:'Customer Success', desc:'Support the post-sale relationship', icon:'chat', color:'green', pending:true,
+    actions:[
+      {title:'Actions not yet defined', desc:'This card is still under review by the enablement team',
+        prompt:'[This workflow — Customer Success — doesn\'t have defined actions yet. Ask the enablement team to add some, or describe what you need below.]',
+        response:'<em>This workflow doesn\'t have defined actions yet — it\'s still being reviewed by the enablement team. Have a common Customer Success task you run? Add it to the review doc.</em>'}
+    ]},
+  { id:'exec-briefings', label:'Executive Briefings', desc:'Prep for senior-stakeholder conversations', icon:'briefcase', color:'purple', pending:true,
+    actions:[
+      {title:'Actions not yet defined', desc:'This card is still under review by the enablement team',
+        prompt:'[This workflow — Executive Briefings — doesn\'t have defined actions yet. Ask the enablement team to add some, or describe what you need below.]',
+        response:'<em>This workflow doesn\'t have defined actions yet — it\'s still being reviewed by the enablement team. Have a common Executive Briefings task you run? Add it to the review doc.</em>'}
+    ]},
+  { id:'product-strategy', label:'Product Strategy', desc:'Product fit, roadmap, and materials', icon:'spark', color:'teal',
+    actions:[
+      {title:'Compare Product Deployment Options', desc:'SaaS, on-prem, hybrid',
+        prompt:'Compare deployment options (SaaS, on-prem, hybrid) for [Product/Offering] relevant to [Company Name]\'s environment.',
+        response:'<strong>Deployment Options</strong><br><br>• <strong>SaaS-managed:</strong> fastest to deploy, lowest operational overhead<br>• <strong>On-prem:</strong> full control, fits strict data residency needs<br>• <strong>Hybrid:</strong> common starting point for large, mixed environments'},
+      {title:'Find Supported Workloads', desc:'What the product actually covers',
+        prompt:'What workloads does [Product/Offering] support that are relevant to [Company Name]\'s environment?',
+        response:'<strong>Supported Workloads</strong><br><br>• Virtual machines (VMware, Hyper-V, Nutanix)<br>• Physical servers and databases<br>• Microsoft 365 and major SaaS applications<br>• Cloud-native workloads across major hyperscalers'},
+      {title:'Explore Product Roadmap', desc:'What\'s coming next',
+        prompt:'What\'s on the near-term roadmap for [Product/Offering] that\'s relevant to [Company Name]\'s use case?',
+        response:'<strong>Roadmap Highlights</strong><br><br>• Expanded AI-driven anomaly detection<br>• Broader SaaS workload coverage<br>• Deeper identity resilience integrations<br><br><em>Confirm current NDA status before sharing specifics externally.</em>'},
+      {title:'Find Product Documentation', desc:'Technical guides and setup docs',
+        prompt:'Find relevant product documentation on [Topic] to share with [Company Name].',
+        response:'<strong>Documentation Found</strong><br><br>• Technical overview: [Topic] architecture guide<br>• Deployment guide: [Topic] setup and best practices<br>• FAQ: common questions on [Topic]'},
+      {title:'Access Product Whitepapers', desc:'Deeper, shareable material',
+        prompt:'Find relevant whitepapers on [Topic] to share with [Company Name].',
+        response:'<strong>Whitepapers Available</strong><br><br>• "State of Data Resilience" — industry benchmark report<br>• "Cyber Recovery Architecture" — technical whitepaper<br>• "Total Cost of Ownership" — ROI-focused whitepaper'},
+      {title:'Research Product Capabilities', desc:'Match features to a requirement',
+        prompt:'Summarize [Product/Offering]\'s capabilities relevant to [Company Name]\'s stated requirement of [requirement].',
+        response:'<strong>Capability Summary</strong><br><br>• Meets [requirement] via [relevant feature]<br>• Additional related capabilities: [feature 2], [feature 3]<br>• Known limitations to flag proactively: [limitation, if any]'}
+    ]},
+  { id:'meeting-prep', label:'Meeting Preparation', desc:'Walk in ready for the conversation', icon:'calendar', color:'teal', pending:true,
+    actions:[
+      {title:'Actions not yet defined', desc:'This card is still under review by the enablement team',
+        prompt:'[This workflow — Meeting Preparation — doesn\'t have defined actions yet. Ask the enablement team to add some, or describe what you need below.]',
+        response:'<em>This workflow doesn\'t have defined actions yet — it\'s still being reviewed by the enablement team. Have a common Meeting Preparation task you run? Add it to the review doc.</em>'}
+    ]},
+  { id:'email', label:'Email Writing', desc:'Draft outreach and follow-ups', icon:'mail', color:'pink',
+    actions:[
+      {title:'Draft Follow-Up Email', desc:'After a meeting, call, or prior message',
+        prompt:'Draft a follow-up email after a [meeting/call] with [Prospect Name] at [Company Name], covering [key topics discussed].',
+        response:'<strong>Email</strong><br>Subject: following up on our conversation<br><br>Hi [Prospect Name],<br><br>Thanks for the time earlier — wanted to recap the key points: [topic 1], [topic 2]. Happy to send over relevant material or set up a deeper technical conversation whenever useful.'},
+      {title:'Summarize Meeting & Next Steps', desc:'Recap with clear ownership',
+        prompt:'Summarize the meeting with [Company Name] on [date] and outline next steps.',
+        response:'<strong>Meeting Summary</strong><br><br>• Attendees: [names / roles]<br>• Key discussion points: [topic 1], [topic 2]<br>• Next steps: [action] — owner: [name], due: [date]'},
+      {title:'Draft Customer Instructions Email', desc:'Step-by-step task walkthrough',
+        prompt:'Draft an email to [Company Name] with step-by-step instructions for [task].',
+        response:'<strong>Email</strong><br>Subject: steps for [task]<br><br>Hi [Prospect Name],<br><br>Here\'s a quick walkthrough for [task]:<br>1. [Step 1]<br>2. [Step 2]<br>3. [Step 3]<br><br>Let me know if anything\'s unclear.'},
+      {title:'Draft Customer Response', desc:'Reply to a question or concern',
+        prompt:'Draft a response to [Company Name]\'s question or concern about [topic].',
+        response:'<strong>Email</strong><br>Subject: re: [topic]<br><br>Hi [Prospect Name],<br><br>Good question — [direct answer to the concern]. Happy to go deeper on this on a call if useful.'},
+      {title:'Create Prospecting Email', desc:'First-touch outreach',
+        prompt:'Create a first-touch prospecting email for [Prospect Name] at [Company Name], focused on [business outcome].',
+        response:'<strong>Email</strong><br>Subject: cutting recovery time for [Company Name]<br><br>Hi [Prospect Name],<br><br>Most teams we talk to can back up everything — recovering fast, under pressure, is the harder problem. Cohesity customers typically cut recovery time from days to hours. Worth a quick conversation?'},
+      {title:'Create Re-Engagement Email', desc:'For silent prospects or stalled outreach',
+        prompt:'Draft a re-engagement email for [Prospect Name] at [Company Name].\n\nBackground:\n• Last interaction: [date/timeframe]\n• Prospect role: [persona/title]',
+        response:'<strong>Email</strong><br>Subject: reduce recovery risk<br><br>Hi Jordan,<br><br>I wanted to follow up on my earlier note. For healthcare infrastructure teams, the risk is not just backup complexity — it\'s whether recovery can happen fast enough when operations are under pressure. Cohesity helps teams improve resilience and reduce recovery risk across critical data environments. Would it be worth a quick look to see if this is relevant for Acme Health?'}
+    ]},
+  { id:'add-workflow', label:'Add a Workflow', desc:'Missing a card your team actually uses?', icon:'plusCircle', color:'purple', addCard:true,
+    actions:[] }
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const state = {
+  theme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+  started: false,
+  messages: [],
+  draft: '',
+  pendingResponse: null,
+  picker: { open:false, view:'workflows', workflowId:null }
+};
+
+const esc = str => String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* =========================================================
+   STATIC CHROME
+   ========================================================= */
+function paintChrome(){
+  document.documentElement.setAttribute('data-theme', state.theme);
+
+  document.getElementById('nav-new').innerHTML     = s('compose') + '<span>New chat</span>';
+  document.getElementById('nav-search').innerHTML  = s('search')  + '<span>Search</span>';
+  document.getElementById('nav-library').innerHTML = s('book')    + '<span>Library</span>';
+  document.getElementById('grp-agents').innerHTML  = s('chevron') + '<span>Agents</span>';
+  document.getElementById('grp-chats').innerHTML   = s('chevron') + '<span>Chats</span>';
+  document.getElementById('btn-back').innerHTML    = s('back');
+
+  const agents = [
+    {n:'Researcher',   g:'search',    t:'tint-blue'},
+    {n:'Analyst',      g:'spark',     t:'tint-green'},
+    {n:'Planner Agent',g:'calendar',  t:'tint-orange'},
+    {n:'Sales Assistant', g:'briefcase', t:'tint-purple', cur:true}
+  ];
+  document.getElementById('agent-list').innerHTML = agents.map(a => `
+    <button class="agent-row" ${a.cur?'aria-current="true"':''}>
+      <span class="agent-glyph ${a.cur?'':a.t}" ${a.cur?'style="background:rgba(255,255,255,.22);color:#fff"':''}>${s(a.g)}</span>
+      <span>${a.n}</span>
+    </button>`).join('');
+
+  const chats = ['Employee Locations and Roles','Prompt library Project Plan','MVP Launch Scope Definition','Arrange interviews with Primary…'];
+  document.getElementById('chat-list').innerHTML = chats.map(c => `<button class="hist">${c}</button>`).join('');
+
+  document.getElementById('topbar-actions').innerHTML = `
+    <button class="ibtn" id="btn-theme" aria-label="Switch to ${state.theme==='light'?'dark':'light'} mode" title="Switch to ${state.theme==='light'?'dark':'light'} mode">
+      ${s(state.theme==='light'?'moon':'sun')}
+    </button>
+    <button class="ibtn" aria-label="Comments">${s('comment')}</button>
+    <button class="ibtn" aria-label="Save">${s('bookmark')}</button>
+    <button class="ibtn" aria-label="Share">${s('share')}</button>
+    <button class="ibtn" aria-label="Manage access">${s('people')}</button>`;
+
+  document.getElementById('btn-theme').addEventListener('click', toggleTheme);
+}
+
+function toggleTheme(){
+  state.theme = state.theme === 'light' ? 'dark' : 'light';
+  paintChrome();
+}
+
+/* =========================================================
+   PICKER
+   ========================================================= */
+/* Tint lives on the parent card/panel, so the glyph just inherits it. */
+function glyph(wf, cls='wf-glyph'){
+  return `<span class="${cls}">${s(wf.icon)}</span>`;
+}
+
+function pickerBody(){
+  if(state.picker.view === 'workflows'){
+    return `<div class="wf-grid" role="list">` + WORKFLOWS.map(wf => `
+      <button class="wf-card tint-${wf.color}${wf.addCard?' is-add':''}" role="listitem"
+              onclick="openWorkflow('${wf.id}')"
+              aria-label="${esc(wf.label)}${wf.pending?' — actions pending':''}">
+        <span class="wf-top">
+          ${glyph(wf)}
+          ${wf.pending ? '<span class="badge">PENDING</span>' : `<span class="wf-go">${s('go')}</span>`}
+        </span>
+        <span class="wf-name">${wf.label}</span>
+        <span class="wf-desc">${wf.desc}</span>
+      </button>`).join('') + `</div>`;
+  }
+  const wf = WORKFLOWS.find(w => w.id === state.picker.workflowId);
+  const n = wf.actions.length;
+  return `
+    <div class="actions tint-${wf.color}">
+      <div class="actions-head">
+        <button class="ibtn" onclick="backToWorkflows()" aria-label="Back to workflows"
+                style="width:26px;height:26px">${s('back')}</button>
+        ${glyph(wf)}
+        <span class="actions-title">${wf.label}</span>
+        <span class="actions-count">${wf.pending ? 'Awaiting definition' : n + (n===1?' action':' actions')}</span>
+      </div>
+      <div class="actions-list">
+        ${wf.actions.map((a,i) => `
+          <button class="act${wf.pending?' is-muted':''}" onclick="chooseAction('${wf.id}',${i})">
+            <span class="act-body">
+              <span class="act-t">${a.title}</span>
+              <span class="act-d">${a.desc}</span>
+            </span>
+            <span class="act-go">${s('arrow')}</span>
+          </button>`).join('')}
+      </div>
+    </div>`;
+}
+
+/* =========================================================
+   COMPOSER
+   ========================================================= */
+function composer(){
+  const ready = state.draft.trim().length > 0;
+  return `
+    <div class="composer-wrap">
+      ${state.started && state.picker.open ? `
+        <div class="popover" role="dialog" aria-label="Choose a workflow">
+          <div class="popover-head">
+            <span>${state.picker.view==='workflows' ? 'Workflows' : 'Choose an action'}</span>
+            <button class="ibtn" onclick="closePicker()" aria-label="Close">${s('close')}</button>
+          </div>
+          <div class="popover-body">${pickerBody()}</div>
+        </div>` : ''}
+      <div class="composer">
+        <textarea id="ta" rows="1" placeholder="Message Sales Assistant"
+          aria-label="Message Sales Assistant"
+          oninput="onInput(this)" onkeydown="onKey(event)">${esc(state.draft)}</textarea>
+        <div class="composer-bar">
+          <div class="composer-bar-l">
+            <button class="ibtn" aria-label="Add attachment">${s('plus')}</button>
+            ${state.started ? `
+              <button class="wf-chip" onclick="togglePicker()"
+                      aria-expanded="${state.picker.open}" aria-label="Switch workflow">
+                ${s('grid')}<span>Switch workflow</span>
+              </button>` : ''}
+          </div>
+          <div class="composer-bar-r">
+            <button class="ibtn" aria-label="Dictate">${s('mic')}</button>
+            <button class="send" data-ready="${ready}" onclick="send()" aria-label="Send message">${s('send')}</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* =========================================================
+   VIEWS
+   ========================================================= */
+function landing(){
+  return `
+    <div class="landing">
+      <div class="landing-col">
+        <div class="hero-mark">${s('bot')}</div>
+        <h1 class="hero-title">Sales Assistant</h1>
+        <p class="hero-sub">Created by <a href="#">the enablement team</a></p>
+        ${composer()}
+        <div class="picker-inline">
+          <div class="picker-head">
+            <span>${state.picker.view==='workflows' ? 'What are you working on today?' : 'Choose an action'}</span>
+          </div>
+          ${pickerBody()}
+        </div>
+      </div>
+    </div>`;
+}
+
+function transcript(){
+  return `
+    <div class="transcript" id="scroll">
+      <div class="thread">
+        ${state.messages.map(m => {
+          if(m.role === 'user')
+            return `<div class="turn-user"><div class="bubble">${esc(m.text)}</div></div>`;
+          if(m.role === 'typing')
+            return `<div class="turn-agent"><div class="turn-glyph">${s('bot')}</div>
+              <div class="turn-body"><div class="turn-name">Sales Assistant</div>
+              <div class="dots" role="status" aria-label="Sales Assistant is responding"><i></i><i></i><i></i></div></div></div>`;
+          return `<div class="turn-agent">
+            <div class="turn-glyph">${s('bot')}</div>
+            <div class="turn-body">
+              <div class="turn-name">Sales Assistant</div>
+              <div class="turn-text">${m.html}</div>
+              <div class="turn-tools">
+                <button class="ibtn" aria-label="Copy">${s('copy')}</button>
+                <button class="ibtn" aria-label="Good response">${s('like')}</button>
+                <button class="ibtn" aria-label="Bad response">${s('dislike')}</button>
+                <button class="ibtn" aria-label="Edit">${s('edit')}</button>
+                <button class="ibtn" aria-label="More actions">${s('more')}</button>
+              </div>
+            </div></div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="composer-dock">
+      <div class="composer-dock-inner">${composer()}</div>
+      <p class="footnote">Guided workflows are a prototype layer. AI responses can be inaccurate — verify before sending to customers.</p>
+    </div>`;
+}
+
+function render(){
+  document.getElementById('stage').innerHTML = state.started ? transcript() : landing();
+  const ta = document.getElementById('ta');
+  if(ta){
+    ta.style.height = 'auto';
+    ta.style.height = Math.min(ta.scrollHeight, 160) + 'px';
+    ta.focus();
+    ta.setSelectionRange(ta.value.length, ta.value.length);
+  }
+  const sc = document.getElementById('scroll');
+  if(sc) sc.scrollTop = sc.scrollHeight;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+function openWorkflow(id){
+  const wf = WORKFLOWS.find(w => w.id === id);
+  if(wf.addCard){
+    state.draft = 'A workflow my team needs that is missing: ';
+    state.pendingResponse = '<em>Noted. In a live build this would be routed to the enablement team for review, the same way the current workflow document collects requests.</em>';
+    state.picker.open = false;
+    render();
+    return;
+  }
+  state.picker.view = 'actions';
+  state.picker.workflowId = id;
+  render();
+}
+function backToWorkflows(){
+  state.picker.view = 'workflows';
+  state.picker.workflowId = null;
+  render();
+}
+function chooseAction(wfId, i){
+  const a = WORKFLOWS.find(w => w.id === wfId).actions[i];
+  state.draft = a.prompt;
+  state.pendingResponse = a.response;
+  state.picker.open = false;
+  state.picker.view = 'workflows';
+  state.picker.workflowId = null;
+  render();
+}
+function togglePicker(){
+  state.picker.open = !state.picker.open;
+  state.picker.view = 'workflows';
+  state.picker.workflowId = null;
+  render();
+}
+function closePicker(){
+  state.picker.open = false;
+  render();
+}
+function onInput(el){
+  state.draft = el.value;
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+  const btn = el.closest('.composer').querySelector('.send');
+  if(btn) btn.dataset.ready = state.draft.trim().length > 0;
+}
+function onKey(e){
+  if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(); }
+}
+function send(){
+  const text = state.draft.trim();
+  if(!text) return;
+  const reply = state.pendingResponse ||
+    'I can work with that. For a more structured path, open <strong>Switch workflow</strong> below and pick the task you\'re doing — or keep typing and I\'ll take it from here.';
+  state.pendingResponse = null;
+  state.messages.push({role:'user', text});
+  state.draft = '';
+  state.started = true;
+  state.picker.open = false;
+  render();
+  state.messages.push({role:'typing'});
+  render();
+  setTimeout(() => {
+    state.messages.pop();
+    state.messages.push({role:'agent', html: reply});
+    render();
+  }, 750);
+}
+
+/* Escape closes the picker */
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && state.picker.open){ closePicker(); }
+});
+
+/* Follow OS theme if the user hasn't overridden it this session */
+if(window.matchMedia){
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', e => {
+    state.theme = e.matches ? 'dark' : 'light';
+    paintChrome();
+  });
+}
+
+paintChrome();
+render();
+</script>
+</body>
+</html>

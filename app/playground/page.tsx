@@ -5,56 +5,49 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { TypingEffect } from "@/components/ui/typing-effect";
 
-type CardSpec = { title: string; description: string; href?: string; gradient?: string };
+type CardSpec = { title: string; description: string; href?: string };
 
 const projects: CardSpec[] = [
   {
     title: "An Interactive Bouquet",
     description: "Intro to Build (Advanced) Physical Computing",
     href: "/playground/valentine-bouquet",
-    gradient: "from-rose-500 via-pink-400 to-red-400",
-  },
-  {
-    title: "Introducing AI-Bot in UCSC Canvas",
-    description: "UX Quant and Intro to HCI Methods",
-    href: "/playground/canvas-ux",
-    gradient: "from-indigo-600 via-indigo-500 to-violet-500",
-  },
-  {
-    title: "Design for Access: YouTube ASL Translations",
-    description: "Intro to HCI Methods",
-    href: "/playground/youtube-asl",
-    gradient: "from-purple-700 via-violet-500 to-teal-400",
   },
   {
     title: "Data Analysis of Disney's The Little Mermaid",
     description: "Intro to HCI Method",
     href: "/playground/little-mermaid",
-    gradient: "from-slate-900 via-blue-800 to-teal-500",
   },
   {
     title: "TikTok: Building a Research Question",
     description: "Intro to HCI",
     href: "/playground/tiktok-food",
-    gradient: "from-gray-950 via-gray-900 to-gray-800",
   },
   {
     title: "Magnetic Hall Effect Sensor",
     description: "Intro to Build (Advanced) Physical Computing",
     href: "/playground/hall-effect",
-    gradient: "from-gray-900 via-gray-800 to-emerald-500",
   },
   {
     title: "Expansion: Accessibility, Aging & Designing",
     description: "Intro to HCI Methods:",
     href: "/playground/hci-expansion",
-    gradient: "from-amber-500 via-orange-400 to-emerald-600",
   },
-  ...Array.from({ length: 3 }).map((_, i) => ({
-    title: `Experiment ${i + 8}`,
-    description: `Interactive sandbox card ${i + 8}`,
-    gradient: "from-zinc-500 via-zinc-400 to-zinc-600",
-  })),
+  {
+    title: "Petals and Promises",
+    description: "Buying flowers made easy",
+    href: "/petalsnpromises",
+  },
+  {
+    title: "Recens Visual Identity Kit",
+    description: "Fashion brand aesthetics",
+    href: "/recens",
+  },
+  {
+    title: "Swavya",
+    description: "Health web application",
+    href: "/swavya",
+  },
 ];
 
 // Bands (each band fills 12 columns) - all items use rowSpan = 2
@@ -62,7 +55,6 @@ const bands: number[][] = [
   [6, 3, 3], // band 1: col6, col3, col3
   [4, 4, 4], // band 2
   [6, 6], // band 3
-  [8, 4], // band 4
 ];
 
 // Build placements from bands: each item gets colStart, rowStart, colSpan, rowSpan
@@ -82,28 +74,44 @@ function buildPlacements(bandsSpec: number[][]) {
 
 const placements = buildPlacements(bands);
 
-function PlaygroundCard({ title, description, href, gradient }: CardSpec) {
-  const g = gradient ?? "from-zinc-500 via-zinc-400 to-zinc-600";
+// Small alternating tilt per tile so the board doesn't feel perfectly gridded
+const TILTS = [-2, 1.5, -1.5, 2, -1, 1.5, -2, 1];
 
+function PlaygroundCard({ title, description, href, index }: CardSpec & { index: number }) {
   const isActive = !!href;
+  const tilt = TILTS[index % TILTS.length];
 
   const content = (
     <motion.div
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      className={`w-full h-full overflow-hidden bg-gradient-to-br ${g} relative flex items-center justify-center ${isActive ? "cursor-pointer" : ""}`}
+      initial={{ rotate: tilt }}
+      whileHover={{ scale: 1.035, rotate: 0 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 260, damping: 18 }}
+      className={`w-full h-full overflow-hidden relative flex items-center justify-center rounded-sm ${isActive ? "cursor-pointer" : ""}`}
+      style={{
+        background: "linear-gradient(160deg, #FFF6B7 0%, #FFE066 55%, #FFD93D 100%)",
+        boxShadow: "0 14px 24px -10px rgba(0,0,0,0.35), 0 3px 6px rgba(0,0,0,0.18)",
+      }}
     >
-      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-white to-transparent" />
-      <div className="z-10 text-center text-white px-4">
+      {/* subtle sheen, like light catching the paper */}
+      <div className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_top_left,_rgba(255,255,255,0.7),_transparent_60%)]" />
+      {/* peeled corner */}
+      <div
+        className="pointer-events-none absolute top-0 right-0 w-6 h-6"
+        style={{
+          background: "linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.12) 50%)",
+        }}
+      />
+      <div className="z-10 text-center px-5">
         {isActive ? (
           <>
-            <h3 className="text-2xl font-bold mb-1">{title}</h3>
-            <p className="text-sm opacity-90">{description}</p>
+            <h3 className="text-xl font-bold mb-1 text-neutral-800">{title}</h3>
+            <p className="text-sm text-neutral-700/80">{description}</p>
           </>
         ) : (
           <>
-            <h3 className="text-2xl font-bold mb-1">Coming Soon</h3>
-            <p className="text-sm opacity-90">Page Under Construction</p>
+            <h3 className="text-xl font-bold mb-1 text-neutral-800">Coming Soon</h3>
+            <p className="text-sm text-neutral-700/80">Page Under Construction</p>
           </>
         )}
       </div>
@@ -111,7 +119,11 @@ function PlaygroundCard({ title, description, href, gradient }: CardSpec) {
   );
 
   if (href) {
-    return <Link href={href} className="block w-full h-full">{content}</Link>;
+    return (
+      <Link href={href} className="block w-full h-full">
+        {content}
+      </Link>
+    );
   }
 
   return content;
@@ -134,7 +146,7 @@ export default function PlaygroundPage() {
         </div>
 
         {/* Desktop bento grid (explicit band placement) */}
-        <div className="hidden lg:grid grid-cols-12 gap-0 auto-rows-[160px]">
+        <div className="hidden lg:grid grid-cols-12 gap-5 auto-rows-[160px]">
           {projects.map((p, idx) => {
             const place = placements[idx];
             const style: React.CSSProperties = place
@@ -146,17 +158,17 @@ export default function PlaygroundPage() {
 
             return (
               <div key={`desk-${idx}`} style={style}>
-                <PlaygroundCard title={p.title} description={p.description} href={p.href} gradient={p.gradient} />
+                <PlaygroundCard title={p.title} description={p.description} href={p.href} index={idx} />
               </div>
             );
           })}
         </div>
 
         {/* Mobile / small screens: flow layout */}
-        <div className="grid grid-cols-12 gap-0 lg:hidden auto-rows-[140px]">
+        <div className="grid grid-cols-12 gap-5 lg:hidden auto-rows-[140px]">
           {projects.map((p, idx) => (
-            <div key={`mob-${idx}`} className={`col-span-12 sm:col-span-6`}> 
-              <PlaygroundCard title={p.title} description={p.description} href={p.href} gradient={p.gradient} />
+            <div key={`mob-${idx}`} className={`col-span-12 sm:col-span-6`}>
+              <PlaygroundCard title={p.title} description={p.description} href={p.href} index={idx} />
             </div>
           ))}
         </div>
