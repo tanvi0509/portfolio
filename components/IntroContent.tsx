@@ -36,8 +36,8 @@ export function IntroContent() {
           className="max-w-4xl mt-1 mb-4 sm:mb-5 text-lg sm:text-xl font-medium font-roboto leading-[1.35] text-blackish/70 dark:text-whitish/60"
         >
           <span className="text-[#FF3E88] font-semibold">Product Designer &amp; Developer</span> with a background in
-          CS &amp; AI/ML engineering and an MS HCI candidate at UC Santa Cruz, most recently a AI UX Intern at Sales
-          Enablement Team at Cohesity.
+          CS &amp; AI/ML engineering and an MS HCI candidate at UC Santa Cruz, currently working as UX Designer at
+          Cohesity.
         </motion.p>
       </div>
 

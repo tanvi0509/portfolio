@@ -81,7 +81,7 @@ export default function NavBar() {
 
               {/* Wrap with anchor tag to allow target="_blank" and rel="noopener noreferrer" */}
                 <Link
-                href="/tanvi-final-resume.pdf"
+                href="/tanvi-resume-ux-designer.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                   className="relative z-20 border border-gray-300 dark:border-white/20 rounded-full px-6 py-3 min-w-[7rem] text-center transition-all duration-300 ease-in-out backdrop-blur-md text-gray-700 dark:text-white bg-white/10 hover:bg-hovercolor hover:text-black hover:text-xl dark:hover:text-black"
@@ -175,7 +175,7 @@ export default function NavBar() {
               <button
                 className="hover:text-black block hover:bg-hovercolor hover:text-xl rounded-lg p-2 transition-all duration-300 ease-in-out dark:hover:text-black"
                 onClick={() => {
-                  window.open("/tanvi-final-resume.pdf", "_blank", "noopener,noreferrer")
+                  window.open("/tanvi-resume-ux-designer.pdf", "_blank", "noopener,noreferrer")
                 }}
               >
                 Resume

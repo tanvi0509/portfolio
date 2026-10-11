@@ -729,7 +729,7 @@ export default function ActivisionCaseStudy() {
             </div>
           </div>
           <div className="ph hero-photo">
-            <img src="/Activisionheroinside.png" alt="Activision playtest triage dashboard hero" />
+            <img src="/Activisionheroinside&outside.png" alt="Activision playtest triage dashboard hero" />
           </div>
         </div>
       </section>
